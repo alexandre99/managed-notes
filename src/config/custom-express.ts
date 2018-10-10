@@ -1,11 +1,24 @@
-import * as express from "express";
-import * as bodyParser from "body-parser";
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as expressValidator from 'express-validator'
 
-export function app() {
-    let app = express();
+class App {
+    private express: express.Application;
+    constructor() {
+        this.express = express();
+        this.definemiddleware();
+    }
 
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+    private definemiddleware(): void {
+        this.express.use(bodyParser.urlencoded({ extended: true }));
+        this.express.use(bodyParser.json());
+        this.express.use(expressValidator());
+    }
 
-    return app;
+    getExpress(): express.Application {
+        return this.express;
+    }
 }
+
+export default new App().getExpress();
+
