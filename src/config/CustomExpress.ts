@@ -1,12 +1,14 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as expressValidator from 'express-validator'
+import notesRouter from '../resources/NotesRouter';
 
 class App {
-    private express: express.Application;
+    public express: express.Application;
     constructor() {
         this.express = express();
         this.definemiddleware();
+        this.defineRoutes();
     }
 
     private definemiddleware(): void {
@@ -15,10 +17,10 @@ class App {
         this.express.use(expressValidator());
     }
 
-    getExpress(): express.Application {
-        return this.express;
+    private defineRoutes(): void {
+        this.express.use('/notes', notesRouter);
     }
 }
 
-export default new App().getExpress();
+export default new App().express;
 
