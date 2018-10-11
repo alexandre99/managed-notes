@@ -8,7 +8,8 @@
     "outDir": "dist",
     "sourceMap": true,
     "target": "es6",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "experimentalDecorators": true
   },
   "compileOnSave": true,
   "include": [
