@@ -1,5 +1,5 @@
-import { IRoute } from "express";
-import * as express from "express";
+import { IRoute } from 'express';
+import * as express from 'express';
 export abstract class NavigationRoutes {
   protected router: IRoute;
   constructor(protected app: express.Application) {

@@ -1,8 +1,9 @@
-import * as express from "express";
-import { Request, Response } from "express";
-import { NavigationRoutes } from "../NavigationRoutes";
-import { Note } from './../../model/Note';
-import { Constantes } from "./../../util/Constantes";
+import * as express from 'express';
+import { Request, Response } from 'express';
+import { NavigationRoutes } from '../NavigationRoutes';
+import { NoteService } from './../../service/NoteService';
+import { Constantes } from './../../util/Constantes';
+
 export class NotesRouter extends NavigationRoutes {
   constructor(app: express.Application) {
     super(app);
@@ -13,20 +14,19 @@ export class NotesRouter extends NavigationRoutes {
   }
 
   defineRoutes(): void {
-    this.defineRouteGetNotes();
+    this.defineRouteFindAllNotes();
     this.defineRouteSaveNote();
   }
 
-  private defineRouteGetNotes(): void {
+  private defineRouteFindAllNotes(): void {
     this.getRouter().get((req: Request, res: Response) => {
-      res.json({ message: "teste" });
+      new NoteService(req, res).findAllNotes();
     });
   }
 
   private defineRouteSaveNote(): void {
     this.getRouter().post((req: Request, res: Response) => {
-      let note = new Note().convertPlainToObject(req.body);
-      res.json({ message: "note received success" });
+      new NoteService(req, res).saveNote();
     });
   }
 }

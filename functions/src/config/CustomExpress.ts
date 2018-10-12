@@ -1,7 +1,7 @@
-import * as express from "express";
-import * as bodyParser from "body-parser";
-import * as expressValidator from "express-validator";
-import { RoutesStack } from "../routes/RoutesStack";
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as expressValidator from 'express-validator';
+import { RoutesStack } from '../routes/RoutesStack';
 
 class App {
   public app: express.Application;
