@@ -34,8 +34,8 @@ export class NotesRouter extends NavigationRoutes {
   private defineRouteFindByTitle() {
     this.app
       .route(this.getBaseUrl() + '/:title/title')
-      .get((req: Request, res: Response) => {
-        new NoteService(req, res).findByTitle();
-      });
+      .get((req: Request, res: Response) => 
+        new NoteService(req, res).findByTitle()
+      );
   }
 }
