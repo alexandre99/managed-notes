@@ -13,20 +13,29 @@ export class NotesRouter extends NavigationRoutes {
     return Constantes.END_POINT_NOTES;
   }
 
-  defineRoutes(): void {
+  defineRoutes() {
     this.defineRouteFindAllNotes();
     this.defineRouteSaveNote();
+    this.defineRouteFindByTitle();
   }
 
-  private defineRouteFindAllNotes(): void {
+  private defineRouteFindAllNotes() {
     this.getRouter().get((req: Request, res: Response) => {
       new NoteService(req, res).findAllNotes();
     });
   }
 
-  private defineRouteSaveNote(): void {
+  private defineRouteSaveNote() {
     this.getRouter().post((req: Request, res: Response) => {
       new NoteService(req, res).saveNote();
     });
+  }
+
+  private defineRouteFindByTitle() {
+    this.app
+      .route(this.getBaseUrl() + '/:title/title')
+      .get((req: Request, res: Response) => {
+        new NoteService(req, res).findByTitle();
+      });
   }
 }

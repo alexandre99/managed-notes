@@ -6,16 +6,24 @@ export class NoteRepository implements Repository<Note> {
   constructor() {
     this.notesCollection = FirebaseDbHelper.getDb().collection('notes');
   }
-  save(note: Note, callbackSuccess: any, callbackError: any) {
+  save(note: Note, callBackSuccess, callBackErr) {
     this.notesCollection
       .add(note.convertObjectToPlain())
-      .then(callbackSuccess)
-      .catch(callbackError);
+      .then(callBackSuccess)
+      .catch(callBackErr);
   }
-  findAll(callbackSuccess: any, callbackError: any) {
+  findAll(callBackSuccess: any, callBackErr) {
     this.notesCollection
       .get()
-      .then(callbackSuccess)
-      .catch(callbackError);
+      .then(callBackSuccess)
+      .catch(callBackErr);
+  }
+
+  findByTitle(title: string, callBackSuccess, callBackErr) {
+    this.notesCollection
+      .where('title', '==', title)
+      .get()
+      .then(callBackSuccess)
+      .catch(callBackErr);
   }
 }

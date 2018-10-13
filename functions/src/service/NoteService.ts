@@ -15,29 +15,36 @@ export class NoteService {
     new NoteRepository().save(
       note,
       ref => this.callBackSaveSuccess(),
-      err => this.callBackSaveErr(err)
+      err => this.callBackErr(err)
     );
-  }
-
-  private validateDataNote() {
-    this.req.assert('titulo', 'O campo título é obrigatório').notEmpty();
-    this.req.assert('descricao', 'O campo descrição é obrigatório').notEmpty();
-    return this.req.validationErrors();
-  }
-
-  private callBackSaveSuccess() {
-    this.res.status(201).json({ message: 'Nota criada com sucesso' });
-  }
-
-  private callBackSaveErr(err) {
-    this.res.status(500).json({ message: 'Erro ao criar nota', erro: err });
   }
 
   findAllNotes() {
     new NoteRepository().findAll(
       snapshot => this.callBackFindAllSuccess(snapshot),
-      err => this.callBackFindAllError(err)
+      err => this.callBackErr(err)
     );
+  }
+
+  findByTitle() {
+    let title: string = this.req.params.title;
+    new NoteRepository().findByTitle(
+      title,
+      snapshot => this.callBackFindAllSuccess(snapshot),
+      err => this.callBackErr(err)
+    );
+  }
+
+  private validateDataNote() {
+    this.req.assert('title', 'O campo título é obrigatório').notEmpty();
+    this.req
+      .assert('description', 'O campo descrição é obrigatório')
+      .notEmpty();
+    return this.req.validationErrors();
+  }
+
+  private callBackSaveSuccess() {
+    this.res.status(201).json({ message: 'Nota criada com sucesso' });
   }
 
   private callBackFindAllSuccess(snapshot) {
@@ -49,7 +56,8 @@ export class NoteService {
     });
     this.res.json(notesDTO);
   }
-  private callBackFindAllError(err) {
+
+  private callBackErr(err) {
     this.res.status(500).json(err);
   }
 }
