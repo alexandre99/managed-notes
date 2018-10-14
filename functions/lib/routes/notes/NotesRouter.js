@@ -14,6 +14,7 @@ class NotesRouter extends NavigationRoutes_1.NavigationRoutes {
         this.defineRouteFindAllNotes();
         this.defineRouteSaveNote();
         this.defineRouteFindByTitle();
+        this.defineRouteUpdateNote();
     }
     defineRouteFindAllNotes() {
         this.getRouter().get((req, res) => {
@@ -23,6 +24,11 @@ class NotesRouter extends NavigationRoutes_1.NavigationRoutes {
     defineRouteSaveNote() {
         this.getRouter().post((req, res) => {
             new NoteService_1.NoteService(req, res).saveNote();
+        });
+    }
+    defineRouteUpdateNote() {
+        this.getRouter().put((req, res) => {
+            new NoteService_1.NoteService(req, res).updateNote();
         });
     }
     defineRouteFindByTitle() {

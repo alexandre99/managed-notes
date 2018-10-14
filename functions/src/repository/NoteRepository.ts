@@ -1,7 +1,8 @@
 import { Repository } from './Repository';
 import { Note } from '../model/Note/Note';
 import { FirebaseDbHelper } from './../helper/FirebaseDbHelper';
-export class NoteRepository implements Repository<Note> {
+import { NoteDTO } from '../model/Note/NoteDTO';
+export class NoteRepository implements Repository<Note, NoteDTO> {
   private notesCollection;
   constructor() {
     this.notesCollection = FirebaseDbHelper.getDb().collection('notes');
@@ -23,6 +24,14 @@ export class NoteRepository implements Repository<Note> {
     this.notesCollection
       .where('title', '==', title)
       .get()
+      .then(callBackSuccess)
+      .catch(callBackErr);
+  }
+  update(noteDTO: NoteDTO, callBackSuccess: any, callBackErr: any) {
+    const note = noteDTO.note;
+    this.notesCollection
+      .doc(noteDTO.id)
+      .update(note)
       .then(callBackSuccess)
       .catch(callBackErr);
   }

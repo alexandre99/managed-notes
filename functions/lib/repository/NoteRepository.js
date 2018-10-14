@@ -24,6 +24,14 @@ class NoteRepository {
             .then(callBackSuccess)
             .catch(callBackErr);
     }
+    update(noteDTO, callBackSuccess, callBackErr) {
+        const note = noteDTO.note;
+        this.notesCollection
+            .doc(noteDTO.id)
+            .update(note)
+            .then(callBackSuccess)
+            .catch(callBackErr);
+    }
 }
 exports.NoteRepository = NoteRepository;
 //# sourceMappingURL=NoteRepository.js.map

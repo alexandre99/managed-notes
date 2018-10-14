@@ -4,9 +4,12 @@ import { Response, Request } from 'express';
 import { NoteDTO } from './../model/Note/NoteDTO';
 export class NoteService {
   constructor(private req: Request, private res: Response) {}
-
   saveNote() {
-    let err = this.validateDataNote();
+    const args = [
+      { field: 'title', message: 'O campo título é obrigatório' },
+      { field: 'description', message: 'O campo descrição é obrigatório' }
+    ];
+    let err = this.validateDataNote(args);
     if (err) {
       this.res.status(400).json(err);
       return;
@@ -17,6 +20,29 @@ export class NoteService {
       ref => this.callBackSaveSuccess(),
       err => this.callBackErr(err)
     );
+  }
+
+  updateNote() {
+    const args = [
+      { field: 'note.title', message: 'O campo título é obrigatório' },
+      { field: 'note.description', message: 'O campo descrição é obrigatório' },
+      { field: 'id', message: 'O campo id é obrigatório' }
+    ];
+    let err = this.validateDataNote(args);
+    if (err) {
+      this.res.status(400).json(err);
+      return;
+    }
+    let noteDTO = new NoteDTO().convertPlainToObject(this.req.body);
+    new NoteRepository().update(
+      noteDTO,
+      ref => this.callBackUpdateSuccess(),
+      err => this.callBackErr(err)
+    );
+  }
+
+  private callBackUpdateSuccess() {
+    this.res.json({ message: 'Nota atualizada com sucesso' });
   }
 
   findAllNotes() {
@@ -35,11 +61,8 @@ export class NoteService {
     );
   }
 
-  private validateDataNote() {
-    this.req.assert('title', 'O campo título é obrigatório').notEmpty();
-    this.req
-      .assert('description', 'O campo descrição é obrigatório')
-      .notEmpty();
+  private validateDataNote(args: any[]) {
+    args.forEach(arg => this.req.assert(arg.field, arg.message).notEmpty());
     return this.req.validationErrors();
   }
 

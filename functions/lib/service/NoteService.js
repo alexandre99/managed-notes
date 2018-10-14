@@ -9,13 +9,34 @@ class NoteService {
         this.res = res;
     }
     saveNote() {
-        let err = this.validateDataNote();
+        const args = [
+            { field: 'title', message: 'O campo título é obrigatório' },
+            { field: 'description', message: 'O campo descrição é obrigatório' }
+        ];
+        let err = this.validateDataNote(args);
         if (err) {
             this.res.status(400).json(err);
             return;
         }
         let note = new Note_1.Note().convertPlainToObject(this.req.body);
         new NoteRepository_1.NoteRepository().save(note, ref => this.callBackSaveSuccess(), err => this.callBackErr(err));
+    }
+    updateNote() {
+        const args = [
+            { field: 'note.title', message: 'O campo título é obrigatório' },
+            { field: 'note.description', message: 'O campo descrição é obrigatório' },
+            { field: 'id', message: 'O campo id é obrigatório' }
+        ];
+        let err = this.validateDataNote(args);
+        if (err) {
+            this.res.status(400).json(err);
+            return;
+        }
+        let noteDTO = new NoteDTO_1.NoteDTO().convertPlainToObject(this.req.body);
+        new NoteRepository_1.NoteRepository().update(noteDTO, ref => this.callBackUpdateSuccess(), err => this.callBackErr(err));
+    }
+    callBackUpdateSuccess() {
+        this.res.json({ message: 'Nota atualizada com sucesso' });
     }
     findAllNotes() {
         new NoteRepository_1.NoteRepository().findAll(snapshot => this.callBackFindAllSuccess(snapshot), err => this.callBackErr(err));
@@ -24,11 +45,8 @@ class NoteService {
         let title = this.req.params.title;
         new NoteRepository_1.NoteRepository().findByTitle(title, snapshot => this.callBackFindAllSuccess(snapshot), err => this.callBackErr(err));
     }
-    validateDataNote() {
-        this.req.assert('title', 'O campo título é obrigatório').notEmpty();
-        this.req
-            .assert('description', 'O campo descrição é obrigatório')
-            .notEmpty();
+    validateDataNote(args) {
+        args.forEach(arg => this.req.assert(arg.field, arg.message).notEmpty());
         return this.req.validationErrors();
     }
     callBackSaveSuccess() {
