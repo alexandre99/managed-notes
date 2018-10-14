@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as expressValidator from 'express-validator';
+import * as cors from 'cors';
 import { RoutesStack } from '../routes/RoutesStack';
 
 class App {
@@ -13,6 +14,7 @@ class App {
   }
 
   private defineMiddleware(): void {
+    this.app.use(cors());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
     this.app.use(expressValidator());

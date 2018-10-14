@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FirebaseDbHelper_1 = require("./../helper/FirebaseDbHelper");
 class NoteRepository {
     constructor() {
-        this.notesCollection = FirebaseDbHelper_1.FirebaseDbHelper.getDb().collection("notes");
+        this.notesCollection = FirebaseDbHelper_1.FirebaseDbHelper.getDb().collection('notes');
     }
     save(note, callBackSuccess, callBackErr) {
         this.notesCollection
@@ -19,7 +19,7 @@ class NoteRepository {
     }
     findByTitle(title, callBackSuccess, callBackErr) {
         this.notesCollection
-            .where("title", "==", title)
+            .where('title', '==', title)
             .get()
             .then(callBackSuccess)
             .catch(callBackErr);

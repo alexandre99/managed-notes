@@ -27,10 +27,8 @@ class NotesRouter extends NavigationRoutes_1.NavigationRoutes {
     }
     defineRouteFindByTitle() {
         this.app
-            .route(this.getBaseUrl() + "/:title/title")
-            .get((req, res) => {
-            new NoteService_1.NoteService(req, res).findByTitle();
-        });
+            .route(this.getBaseUrl() + '/:title/title')
+            .get((req, res) => new NoteService_1.NoteService(req, res).findByTitle());
     }
 }
 exports.NotesRouter = NotesRouter;

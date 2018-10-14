@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HomePage } from './../app/pages/home/home.page';
+import { RegisterNotePage } from './../app/pages/register-note/register-note.page';
 
 const routes: Routes = [
   {
@@ -8,12 +10,17 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    path: HomePage.pageName,
+    loadChildren: './pages/home/home.module#HomePageModule'
   },
   {
     path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
+    loadChildren: './pages/list/list.module#ListPageModule'
+  },
+  {
+    path: RegisterNotePage.pageName,
+    loadChildren:
+      './pages/register-note/register-note.module#RegisterNotePageModule'
   }
 ];
 

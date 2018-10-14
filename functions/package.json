@@ -19,9 +19,11 @@
   "author": "Alexandre Teixeira",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.4",
     "body-parser": "^1.18.3",
     "class-transformer": "^0.1.9",
     "consign": "^0.1.6",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-validator": "^5.3.0",
     "firebase-admin": "~6.0.0",

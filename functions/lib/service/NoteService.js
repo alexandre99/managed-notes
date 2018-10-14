@@ -25,14 +25,14 @@ class NoteService {
         new NoteRepository_1.NoteRepository().findByTitle(title, snapshot => this.callBackFindAllSuccess(snapshot), err => this.callBackErr(err));
     }
     validateDataNote() {
-        this.req.assert("title", "O campo título é obrigatório").notEmpty();
+        this.req.assert('title', 'O campo título é obrigatório').notEmpty();
         this.req
-            .assert("description", "O campo descrição é obrigatório")
+            .assert('description', 'O campo descrição é obrigatório')
             .notEmpty();
         return this.req.validationErrors();
     }
     callBackSaveSuccess() {
-        this.res.status(201).json({ message: "Nota criada com sucesso" });
+        this.res.status(201).json({ message: 'Nota criada com sucesso' });
     }
     callBackFindAllSuccess(snapshot) {
         let notesDTO = [];

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
+const cors = require("cors");
 const RoutesStack_1 = require("../routes/RoutesStack");
 class App {
     constructor() {
@@ -12,6 +13,7 @@ class App {
         this.defineRoutes();
     }
     defineMiddleware() {
+        this.app.use(cors());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(bodyParser.json());
         this.app.use(expressValidator());
