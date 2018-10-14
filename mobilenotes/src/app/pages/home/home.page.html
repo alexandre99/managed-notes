@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let noteDTO of notesDTO">
+    <ion-card *ngFor="let noteDTO of notesDTO" (click)="updateNote(noteDTO)">
       <ion-card-header>
         <ion-card-title> {{noteDTO.note.title}}</ion-card-title>
       </ion-card-header>

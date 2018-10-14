@@ -3,15 +3,19 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { URL_API } from './../app.api';
 import { NoteDTO } from './../model/noteDTO';
+import { Note } from './../model/note';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NoteService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   findAll(): Observable<NoteDTO[]> {
     return this.http.get<NoteDTO[]>(`${URL_API}/notes`);
+  }
+
+  save(note: Note): Observable<any> {
+    return this.http.post<any>(`${URL_API}/notes`, note);
   }
 }

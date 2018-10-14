@@ -1,14 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {
-  AlertController,
-  LoadingController,
-  NavController
-} from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
+import { RegisterNotePage } from '../register-note/register-note.page';
 import { NoteDTO } from './../../model/noteDTO';
 import { NoteService } from './../../services/note.service';
-import { RegisterNotePage } from './../register-note/register-note.page';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +20,7 @@ export class HomePage implements OnInit {
     private noteService: NoteService,
     private loadingController: LoadingController,
     private alertController: AlertController,
-    private navCtrl: NavController
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +35,8 @@ export class HomePage implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.loading.dismiss();
-        this.showMessageError(err.message);
+        console.log(err);
+        this.showMessageError('Falha ao consultar as notas');
       }
     );
   }
@@ -60,6 +58,10 @@ export class HomePage implements OnInit {
   }
 
   registerNote() {
-    this.navCtrl.navigateForward('register-note');
+    this.router.navigate([`/${RegisterNotePage.pageName}`]);
+  }
+
+  updateNote(noteDTO: NoteDTO) {
+    this.router.navigate([`/${RegisterNotePage.pageName}`, noteDTO]);
   }
 }
