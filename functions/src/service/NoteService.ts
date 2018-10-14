@@ -61,6 +61,21 @@ export class NoteService {
     );
   }
 
+  findById() {
+    let id: string = this.req.params.id;
+    new NoteRepository().findById(
+      id,
+      doc => this.callBackFindByIdSuccess(doc),
+      err => this.callBackErr(err)
+    );
+  }
+
+  private callBackFindByIdSuccess(doc) {
+    let note = new Note().convertPlainToObject(doc.data());
+    let noteDTO = new NoteDTO(doc.id, note);
+    this.res.json(noteDTO);
+  }
+
   private validateDataNote(args: any[]) {
     args.forEach(arg => this.req.assert(arg.field, arg.message).notEmpty());
     return this.req.validationErrors();

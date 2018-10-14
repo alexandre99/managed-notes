@@ -45,6 +45,15 @@ class NoteService {
         let title = this.req.params.title;
         new NoteRepository_1.NoteRepository().findByTitle(title, snapshot => this.callBackFindAllSuccess(snapshot), err => this.callBackErr(err));
     }
+    findById() {
+        let id = this.req.params.id;
+        new NoteRepository_1.NoteRepository().findById(id, doc => this.callBackFindByIdSuccess(doc), err => this.callBackErr(err));
+    }
+    callBackFindByIdSuccess(doc) {
+        let note = new Note_1.Note().convertPlainToObject(doc.data());
+        let noteDTO = new NoteDTO_1.NoteDTO(doc.id, note);
+        this.res.json(noteDTO);
+    }
     validateDataNote(args) {
         args.forEach(arg => this.req.assert(arg.field, arg.message).notEmpty());
         return this.req.validationErrors();

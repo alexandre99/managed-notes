@@ -21,6 +21,11 @@ const routes: Routes = [
     path: RegisterNotePage.pageName,
     loadChildren:
       './pages/register-note/register-note.module#RegisterNotePageModule'
+  },
+  {
+    path: RegisterNotePage.pageName + '/:id',
+    loadChildren:
+      './pages/register-note/register-note.module#RegisterNotePageModule'
   }
 ];
 

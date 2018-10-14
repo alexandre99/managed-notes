@@ -32,6 +32,13 @@ class NoteRepository {
             .then(callBackSuccess)
             .catch(callBackErr);
     }
+    findById(id, callBackSuccess, callBackErr) {
+        this.notesCollection
+            .doc(id)
+            .get()
+            .then(callBackSuccess)
+            .catch(callBackErr);
+    }
 }
 exports.NoteRepository = NoteRepository;
 //# sourceMappingURL=NoteRepository.js.map

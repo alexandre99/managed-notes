@@ -18,4 +18,12 @@ export class NoteService {
   save(note: Note): Observable<any> {
     return this.http.post<any>(`${URL_API}/notes`, note);
   }
+
+  findById(id: string): Observable<NoteDTO> {
+    return this.http.get<NoteDTO>(`${URL_API}/notes/${id}/id`);
+  }
+
+  update(noteDTO: NoteDTO): Observable<any> {
+    return this.http.put<any>(`${URL_API}/notes`, noteDTO);
+  }
 }

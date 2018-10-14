@@ -18,6 +18,7 @@ export class NotesRouter extends NavigationRoutes {
     this.defineRouteSaveNote();
     this.defineRouteFindByTitle();
     this.defineRouteUpdateNote();
+    this.defineRouteFindById();
   }
 
   private defineRouteFindAllNotes() {
@@ -43,6 +44,14 @@ export class NotesRouter extends NavigationRoutes {
       .route(this.getBaseUrl() + '/:title/title')
       .get((req: Request, res: Response) => 
         new NoteService(req, res).findByTitle()
+      );
+  }
+
+  private defineRouteFindById() {
+    this.app
+      .route(this.getBaseUrl() + '/:id/id')
+      .get((req: Request, res: Response) => 
+        new NoteService(req, res).findById()
       );
   }
 }

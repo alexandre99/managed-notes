@@ -35,4 +35,11 @@ export class NoteRepository implements Repository<Note, NoteDTO> {
       .then(callBackSuccess)
       .catch(callBackErr);
   }
+  findById(id: string, callBackSuccess: any, callBackErr: any) {
+    this.notesCollection
+      .doc(id)
+      .get()
+      .then(callBackSuccess)
+      .catch(callBackErr);
+  }
 }

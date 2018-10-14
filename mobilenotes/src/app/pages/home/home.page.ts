@@ -62,6 +62,7 @@ export class HomePage implements OnInit {
   }
 
   updateNote(noteDTO: NoteDTO) {
-    this.router.navigate([`/${RegisterNotePage.pageName}`, noteDTO]);
+    const id = noteDTO.id;
+    this.router.navigate([`/${RegisterNotePage.pageName}/${id}`, noteDTO]);
   }
 }
