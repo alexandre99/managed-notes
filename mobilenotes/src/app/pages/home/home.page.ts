@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
@@ -21,10 +21,15 @@ export class HomePage implements OnInit {
     private noteService: NoteService,
     private loadingController: LoadingController,
     private alertController: AlertController,
-    private router: Router
-  ) {}
+    private router: Router,
+    private zone: NgZone
+  ) { }
 
   ngOnInit(): void {
+    this.inicializarLista();
+  }
+
+  inicializarLista() {
     from(this.presentLoading()).subscribe(() => this.findAllNotes());
   }
 
@@ -67,11 +72,11 @@ export class HomePage implements OnInit {
     this.router.navigate([`/${RegisterNotePage.pageName}/${id}`, noteDTO]);
   }
 
-  deleteNote() {
-    this.presentAlertConfirm();
+  deleteNote(id) {
+    this.presentAlertConfirm(id);
   }
 
-  async presentAlertConfirm() {
+  async presentAlertConfirm(id: string) {
     const alert = await this.alertController.create({
       header: 'Confirmação',
       message: '<strong>Confirma a exclusão da Nota?</strong>',
@@ -80,16 +85,34 @@ export class HomePage implements OnInit {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => {}
+          handler: (blah) => { }
         }, {
           text: 'Ok',
           handler: () => {
-           console.log('Delete note');
+            from(this.presentLoading()).subscribe(() => {
+              this.noteService.delete(id).subscribe(data => {
+                this.loading.dismiss();
+                from(this.showMessageSucesss(data.message)).subscribe(() => this.zone.run(() => this.inicializarLista()));
+              }, (err: HttpErrorResponse) => {
+                this.loading.dismiss();
+                console.log(err);
+                this.showMessageError('Falha ao consultar as notas');
+              });
+            });
           }
         }
       ]
     });
 
     await alert.present();
+  }
+
+  private async showMessageSucesss(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Info',
+      message: message,
+      buttons: ['Ok']
+    });
+    return await alert.present();
   }
 }

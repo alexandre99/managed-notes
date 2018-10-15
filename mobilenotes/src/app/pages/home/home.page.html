@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let noteDTO of notesDTO" (click)="updateNote(noteDTO)" (contextmenu)="deleteNote()">
+    <ion-card *ngFor="let noteDTO of notesDTO" (click)="updateNote(noteDTO)" (contextmenu)="deleteNote(noteDTO.id)">
       <ion-card-header>
         <ion-card-title> {{noteDTO.note.title}}</ion-card-title>
       </ion-card-header>

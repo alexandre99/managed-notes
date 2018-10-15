@@ -36,13 +36,13 @@ export class NoteService {
     let noteDTO = new NoteDTO().convertPlainToObject(this.req.body);
     new NoteRepository().update(
       noteDTO,
-      ref => this.callBackUpdateSuccess(),
+      ref => this.callBackUpdateSuccess('Nota atualizada com sucesso'),
       err => this.callBackErr(err)
     );
   }
 
-  private callBackUpdateSuccess() {
-    this.res.json({ message: 'Nota atualizada com sucesso' });
+  private callBackUpdateSuccess(message: string) {
+    this.res.json({ message: message });
   }
 
   findAllNotes() {
@@ -66,6 +66,15 @@ export class NoteService {
     new NoteRepository().findById(
       id,
       doc => this.callBackFindByIdSuccess(doc),
+      err => this.callBackErr(err)
+    );
+  }
+
+  deleteNote() {
+    let id: string = this.req.params.id;
+    new NoteRepository().delete(
+      id,
+      () => this.callBackUpdateSuccess('Nota removida com sucesso'),
       err => this.callBackErr(err)
     );
   }

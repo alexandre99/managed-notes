@@ -42,4 +42,12 @@ export class NoteRepository implements Repository<Note, NoteDTO> {
       .then(callBackSuccess)
       .catch(callBackErr);
   }
+
+  delete(id: string, callBackSuccess, callBackErr) {
+    this.notesCollection
+      .doc(id)
+      .delete()
+      .then(callBackSuccess)
+      .catch(callBackErr);
+  }
 }

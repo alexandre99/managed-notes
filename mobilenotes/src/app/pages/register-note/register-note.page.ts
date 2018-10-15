@@ -1,12 +1,11 @@
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { NoteService } from '../../services/note.service';
-import { Location } from '@angular/common';
-import { NoteDTO } from './../../model/noteDTO';
 @Component({
   selector: 'app-register-note',
   templateUrl: './register-note.page.html',
@@ -22,8 +21,9 @@ export class RegisterNotePage implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private formBuilder: FormBuilder,
-    private noteService: NoteService
-  ) {}
+    private noteService: NoteService,
+    private zone: NgZone
+  ) { }
 
   ngOnInit() {
     const id: string = this.route.snapshot.params['id'];
@@ -56,7 +56,7 @@ export class RegisterNotePage implements OnInit {
         this.noteService
           .save(note)
           .subscribe(
-            message => this.callBackSaveSuccess(message),
+            data => this.callBackSaveSuccess(data.message),
             (error: HttpErrorResponse) =>
               this.callBackSaveError(error, 'Erro ao tentar salvar nota')
           );
@@ -80,9 +80,7 @@ export class RegisterNotePage implements OnInit {
 
   private callBackSaveSuccess(message) {
     this.loading.dismiss();
-    from(this.showMessageSucesss(message.message)).subscribe(() =>
-      this.location.back()
-    );
+    from(this.showMessageSucess(message)).subscribe(() => this.zone.run(() => this.location.back()));
   }
 
   async presentLoading() {
@@ -98,15 +96,15 @@ export class RegisterNotePage implements OnInit {
       message: message,
       buttons: ['Ok']
     });
-    await alert.present();
+   return await alert.present();
   }
 
-  private async showMessageSucesss(message: string) {
+  private async showMessageSucess(message: string) {
     const alert = await this.alertController.create({
       header: 'Info',
       message: message,
       buttons: ['Ok']
     });
-    await alert.present();
+    return await alert.present();
   }
 }

@@ -19,6 +19,7 @@ export class NotesRouter extends NavigationRoutes {
     this.defineRouteFindByTitle();
     this.defineRouteUpdateNote();
     this.defineRouteFindById();
+    this.defineRouteDeleteNote();
   }
 
   private defineRouteFindAllNotes() {
@@ -39,10 +40,18 @@ export class NotesRouter extends NavigationRoutes {
     });
   }
 
+  private defineRouteDeleteNote() {
+    this.app
+      .route(this.getBaseUrl() + '/:id')
+      .delete((req: Request, res: Response) =>
+        new NoteService(req, res).deleteNote()
+      );
+  }
+
   private defineRouteFindByTitle() {
     this.app
       .route(this.getBaseUrl() + '/:title/title')
-      .get((req: Request, res: Response) => 
+      .get((req: Request, res: Response) =>
         new NoteService(req, res).findByTitle()
       );
   }
@@ -50,7 +59,7 @@ export class NotesRouter extends NavigationRoutes {
   private defineRouteFindById() {
     this.app
       .route(this.getBaseUrl() + '/:id/id')
-      .get((req: Request, res: Response) => 
+      .get((req: Request, res: Response) =>
         new NoteService(req, res).findById()
       );
   }

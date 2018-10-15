@@ -3,4 +3,5 @@ export abstract class Repository<T, K> {
   abstract findAll(callBackSuccess, callBackErr);
   abstract update(value: K, callBackSuccess, callBackErr);
   abstract findById(id: string, callBackSuccess, callBackErr);
+  abstract delete(id: string, callBackSuccess, callBackErr);
 }
