@@ -5,6 +5,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { RegisterNotePage } from '../register-note/register-note.page';
 import { NoteDTO } from './../../model/noteDTO';
+import { Note } from './../../model/note';
 import { NoteService } from './../../services/note.service';
 
 @Component({
@@ -14,7 +15,7 @@ import { NoteService } from './../../services/note.service';
 })
 export class HomePage implements OnInit {
   static pageName = 'home';
-  notesDTO: NoteDTO[];
+  notesDTO: NoteDTO[] = [];
   loading: any;
   constructor(
     private noteService: NoteService,
@@ -64,5 +65,31 @@ export class HomePage implements OnInit {
   updateNote(noteDTO: NoteDTO) {
     const id = noteDTO.id;
     this.router.navigate([`/${RegisterNotePage.pageName}/${id}`, noteDTO]);
+  }
+
+  deleteNote() {
+    this.presentAlertConfirm();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'Confirmação',
+      message: '<strong>Confirma a exclusão da Nota?</strong>',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {}
+        }, {
+          text: 'Ok',
+          handler: () => {
+           console.log('Delete note');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

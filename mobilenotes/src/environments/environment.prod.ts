@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: ''
+  api: 'https://us-central1-managed-notes.cloudfunctions.net/webApi'
 };
