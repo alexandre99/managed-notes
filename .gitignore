@@ -149,6 +149,6 @@ typings/
 .google-services.json
 google-services.json
 firebase.json
-.firebaseserc
+.firebaserc
 .angulardoc.json
 # End of https://www.gitignore.io/api/node,ionic3,angular,visualstudiocode
