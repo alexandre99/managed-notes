@@ -6,7 +6,7 @@ import { RegisterNotePage } from './../app/pages/register-note/register-note.pag
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: HomePage.pageName,
     pathMatch: 'full'
   },
   {
