@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
@@ -64,7 +64,7 @@ export class RegisterNotePage implements OnInit {
         this.noteService
           .update(noteDTO)
           .subscribe(
-            message => this.callBackSaveSuccess(message),
+            data => this.callBackSaveSuccess(data.message),
             (error: HttpErrorResponse) =>
               this.callBackSaveError(error, 'Erro ao tentar atualizar nota')
           );

@@ -23,14 +23,13 @@ export class HomePage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     private zone: NgZone
-  ) { }
-
+  ) {}
   ngOnInit(): void {
     this.inicializarLista();
   }
 
   inicializarLista() {
-    from(this.presentLoading()).subscribe(() => this.findAllNotes());
+    this.zone.run(() => from(this.presentLoading()).subscribe(() => this.findAllNotes()));
   }
 
   findAllNotes() {
