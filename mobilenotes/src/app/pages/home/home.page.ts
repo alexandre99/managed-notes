@@ -1,11 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd, ActivationEnd } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { RegisterNotePage } from '../register-note/register-note.page';
 import { NoteDTO } from './../../model/noteDTO';
-import { Note } from './../../model/note';
 import { NoteService } from './../../services/note.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { NoteService } from './../../services/note.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss']
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   static pageName = 'home';
   notesDTO: NoteDTO[] = [];
   loading: any;
@@ -28,14 +27,18 @@ export class HomePage implements OnInit {
     this.inicializarLista();
   }
 
+  ngOnDestroy(): void {
+   console.log('morri');
+  }
+
   inicializarLista() {
-    this.zone.run(() => from(this.presentLoading()).subscribe(() => this.findAllNotes()));
+    from(this.presentLoading()).subscribe(() => this.findAllNotes());
   }
 
   findAllNotes() {
     this.noteService.findAll().subscribe(
       notesDTO => {
-        this.notesDTO = notesDTO;
+        this.zone.run(() => this.notesDTO = notesDTO);
         this.loading.dismiss();
       },
       (err: HttpErrorResponse) => {
@@ -91,7 +94,7 @@ export class HomePage implements OnInit {
             from(this.presentLoading()).subscribe(() => {
               this.noteService.delete(id).subscribe(data => {
                 this.loading.dismiss();
-                from(this.showMessageSucesss(data.message)).subscribe(() => this.zone.run(() => this.inicializarLista()));
+                from(this.showMessageSucesss(data.message)).subscribe(() =>() => this.inicializarLista());
               }, (err: HttpErrorResponse) => {
                 this.loading.dismiss();
                 console.log(err);
