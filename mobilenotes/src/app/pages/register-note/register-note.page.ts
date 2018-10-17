@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
@@ -11,7 +11,7 @@ import { NoteService } from '../../services/note.service';
   templateUrl: './register-note.page.html',
   styleUrls: ['./register-note.page.scss']
 })
-export class RegisterNotePage implements OnInit {
+export class RegisterNotePage implements OnInit, OnDestroy {
   static pageName = 'register-note';
   noteDTOForm: FormGroup;
   loading: any;
@@ -37,6 +37,11 @@ export class RegisterNotePage implements OnInit {
       );
     }
   }
+
+  ngOnDestroy(): void {
+    console.log('morreu register note');
+   }
+ 
 
   private iniciarFormGroup() {
     this.noteDTOForm = new FormGroup({

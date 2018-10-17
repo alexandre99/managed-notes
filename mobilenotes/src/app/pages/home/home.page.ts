@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd, ActivationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { RegisterNotePage } from '../register-note/register-note.page';
@@ -32,7 +32,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   inicializarLista() {
-    from(this.presentLoading()).subscribe(() => this.findAllNotes());
+    this.zone.run(() => from(this.presentLoading()).subscribe(() => this.findAllNotes()));
   }
 
   findAllNotes() {
