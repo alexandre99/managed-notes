@@ -23,6 +23,10 @@ export class NoteService {
     return this.http.get<NoteDTO>(`${URL_API}/notes/${id}/id`);
   }
 
+  findByTitle(title: string): Observable<NoteDTO[]> {
+    return this.http.get<NoteDTO[]>(`${URL_API}/notes/${title}/title`);
+  }
+
   update(noteDTO: NoteDTO): Observable<any> {
     return this.http.put<any>(`${URL_API}/notes`, noteDTO);
   }
