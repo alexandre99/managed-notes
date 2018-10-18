@@ -1,21 +1,17 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomePage } from './../app/pages/home/home.page';
+import { RouterModule, Routes } from '@angular/router';
 import { RegisterNotePage } from './../app/pages/register-note/register-note.page';
+import { ListNotesPage } from './pages/list-notes/list-notes.page';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: HomePage.pageName,
+    redirectTo: ListNotesPage.pageName,
     pathMatch: 'full'
   },
   {
-    path: HomePage.pageName,
-    loadChildren: './pages/home/home.module#HomePageModule'
-  },
-  {
-    path: 'list',
-    loadChildren: './pages/list/list.module#ListPageModule'
+    path: ListNotesPage.pageName,
+    loadChildren: './pages/list-notes/list-notes.module#ListNotesPageModule'
   },
   {
     path: RegisterNotePage.pageName,

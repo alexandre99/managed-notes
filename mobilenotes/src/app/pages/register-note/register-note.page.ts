@@ -41,9 +41,8 @@ export class RegisterNotePage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     console.log('morreu register note');
    }
- 
 
-  private iniciarFormGroup() {
+   private iniciarFormGroup() {
     this.noteDTOForm = new FormGroup({
       id: this.formBuilder.control(''),
       note: new FormGroup({

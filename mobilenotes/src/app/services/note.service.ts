@@ -27,7 +27,7 @@ export class NoteService {
     return this.http.put<any>(`${URL_API}/notes`, noteDTO);
   }
 
-  delete(id: string) : Observable<any> {
+  delete(id: string): Observable<any> {
     return this.http.delete<any>(`${URL_API}/notes/${id}`);
   }
 }

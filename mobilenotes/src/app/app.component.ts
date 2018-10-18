@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-
-import { Platform, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Platform } from '@ionic/angular';
+import { ListNotesPage } from './pages/list-notes/list-notes.page';
 import { RegisterNotePage } from './pages/register-note/register-note.page';
-import { HomePage } from './pages/home/home.page';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +13,15 @@ export class AppComponent {
   public appPages = [
     {
       title: 'Notas',
-      url: '/' + HomePage.pageName,
-      icon: 'book'
+      url: '/' + ListNotesPage.pageName,
+      icon: 'book',
+      typeNavigation: 'root'
     },
     {
       title: 'Cadastro de Notas',
       url: '/' + RegisterNotePage.pageName,
-      icon: 'add-circle'
+      icon: 'add-circle',
+      typeNavigation: 'root'
     }
   ];
 
@@ -38,5 +39,4 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
-
 }

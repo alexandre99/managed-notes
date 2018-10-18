@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Notas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding style="width: 100%" *ngFor="let noteDTO of notesDTO" [routerLink]="['/register-note', noteDTO.id]" [routerDirection]="'root'">
+      <ion-item style="width: 100%; padding: 0%;">
+        <ion-card style="width: 100%; padding: 0%;">
+          <ion-card-header>
+            <ion-card-title> {{noteDTO.note.title}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{noteDTO.note.description}}
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      <ion-item-options side="end" (ionSwipe)="deleteNote(noteDTO.id)">
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-input disabled placeholder="Inserir uma nota" [routerLink]="['/register-note']" [routerDirection]="'root'"></ion-input>
+  </ion-toolbar>
+</ion-footer>

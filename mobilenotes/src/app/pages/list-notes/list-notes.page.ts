@@ -8,12 +8,12 @@ import { NoteDTO } from './../../model/noteDTO';
 import { NoteService } from './../../services/note.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  selector: 'app-list-notes',
+  templateUrl: './list-notes.page.html',
+  styleUrls: ['./list-notes.page.scss']
 })
-export class HomePage implements OnInit, OnDestroy {
-  static pageName = 'home';
+export class ListNotesPage implements OnInit, OnDestroy {
+  static pageName = 'list-notes';
   notesDTO: NoteDTO[] = [];
   loading: any;
   constructor(
@@ -28,17 +28,17 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   console.log('morri');
+    console.log('morreu a lista');
   }
 
   inicializarLista() {
-    this.zone.run(() => from(this.presentLoading()).subscribe(() => this.findAllNotes()));
+    from(this.presentLoading()).subscribe(() => this.findAllNotes());
   }
 
   findAllNotes() {
     this.noteService.findAll().subscribe(
       notesDTO => {
-        this.zone.run(() => this.notesDTO = notesDTO);
+        this.zone.run(() => (this.notesDTO = notesDTO));
         this.loading.dismiss();
       },
       (err: HttpErrorResponse) => {
@@ -71,11 +71,25 @@ export class HomePage implements OnInit, OnDestroy {
 
   updateNote(noteDTO: NoteDTO) {
     const id = noteDTO.id;
-    this.router.navigate([`/${RegisterNotePage.pageName}/${id}`, noteDTO]);
+    this.router.navigate([`/${RegisterNotePage.pageName}/${id}`]);
   }
 
   deleteNote(id) {
-    this.presentAlertConfirm(id);
+    from(this.presentLoading()).subscribe(() => {
+      this.noteService.delete(id).subscribe(
+        data => {
+          this.loading.dismiss();
+          from(this.showMessageSucesss(data.message)).subscribe(() =>
+            this.inicializarLista()
+          );
+        },
+        (err: HttpErrorResponse) => {
+          this.loading.dismiss();
+          console.log(err);
+          this.showMessageError('Falha ao consultar as notas');
+        }
+      );
+    });
   }
 
   async presentAlertConfirm(id: string) {
@@ -87,20 +101,11 @@ export class HomePage implements OnInit, OnDestroy {
           text: 'Cancelar',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: (blah) => { }
-        }, {
+          handler: blah => {}
+        },
+        {
           text: 'Ok',
           handler: () => {
-            from(this.presentLoading()).subscribe(() => {
-              this.noteService.delete(id).subscribe(data => {
-                this.loading.dismiss();
-                from(this.showMessageSucesss(data.message)).subscribe(() =>() => this.inicializarLista());
-              }, (err: HttpErrorResponse) => {
-                this.loading.dismiss();
-                console.log(err);
-                this.showMessageError('Falha ao consultar as notas');
-              });
-            });
           }
         }
       ]
