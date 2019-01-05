@@ -22,7 +22,9 @@ export class NoteRepository implements Repository<Note, NoteDTO> {
 
   findByTitle(title: string, callBackSuccess, callBackErr) {
     this.notesCollection
-      .where('title', '==', title)
+      .orderBy('title')
+      .startAt(title)
+      .endAt(`${title}\uf8ff`)
       .get()
       .then(callBackSuccess)
       .catch(callBackErr);
