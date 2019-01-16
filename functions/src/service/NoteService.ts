@@ -2,50 +2,49 @@ import { Note } from '../model/Note/Note';
 import { NoteRepository } from '../repository/NoteRepository';
 import { Response, Request } from 'express';
 import { NoteDTO } from './../model/Note/NoteDTO';
-export class NoteService {
-  constructor(private req: Request, private res: Response) {}
-  saveNote() {
+import { Service } from './Service';
+export class NoteService implements Service<Note, NoteDTO> {
+
+  constructor(private req: Request, private resp: Response) { }
+
+  save() {
     const args = [
       { field: 'title', message: 'O campo título é obrigatório' },
       { field: 'description', message: 'O campo descrição é obrigatório' }
     ];
-    let err = this.validateDataNote(args);
+    let err = this.validateData(args);
     if (err) {
-      this.res.status(400).json(err);
+      this.resp.status(400).json(err);
       return;
     }
     let note = new Note().convertPlainToObject(this.req.body);
     new NoteRepository().save(
       note,
-      ref => this.callBackSaveSuccess(),
+      ref => this.callBackSuccess('Nota criada com sucesso', 201),
       err => this.callBackErr(err)
     );
   }
 
-  updateNote() {
+  update() {
     const args = [
       { field: 'note.title', message: 'O campo título é obrigatório' },
       { field: 'note.description', message: 'O campo descrição é obrigatório' },
       { field: 'id', message: 'O campo id é obrigatório' }
     ];
-    let err = this.validateDataNote(args);
+    let err = this.validateData(args);
     if (err) {
-      this.res.status(400).json(err);
+      this.resp.status(400).json(err);
       return;
     }
     let noteDTO = new NoteDTO().convertPlainToObject(this.req.body);
     new NoteRepository().update(
       noteDTO,
-      ref => this.callBackUpdateSuccess('Nota atualizada com sucesso'),
+      () => this.callBackSuccess('Nota atualizada com sucesso'),
       err => this.callBackErr(err)
     );
   }
 
-  private callBackUpdateSuccess(message: string) {
-    this.res.json({ message: message });
-  }
-
-  findAllNotes() {
+  findAll() {
     new NoteRepository().findAll(
       snapshot => this.callBackFindAllSuccess(snapshot),
       err => this.callBackErr(err)
@@ -70,41 +69,41 @@ export class NoteService {
     );
   }
 
-  deleteNote() {
+  delete() {
     let id: string = this.req.params.id;
     new NoteRepository().delete(
       id,
-      () => this.callBackUpdateSuccess('Nota removida com sucesso'),
+      () => this.callBackSuccess('Nota removida com sucesso'),
       err => this.callBackErr(err)
     );
   }
 
-  private callBackFindByIdSuccess(doc) {
+  callBackFindByIdSuccess(doc) {
     let note = new Note().convertPlainToObject(doc.data());
     let noteDTO = new NoteDTO(doc.id, note);
-    this.res.json(noteDTO);
+    this.resp.json(noteDTO);
   }
 
-  private validateDataNote(args: any[]) {
+  validateData(args: any[]) {
     args.forEach(arg => this.req.assert(arg.field, arg.message).notEmpty());
     return this.req.validationErrors();
   }
 
-  private callBackSaveSuccess() {
-    this.res.status(201).json({ message: 'Nota criada com sucesso' });
+  callBackSuccess(msg: string, status: number = 200) {
+    this.resp.status(status).json({ message: msg });
   }
 
-  private callBackFindAllSuccess(snapshot) {
+  callBackFindAllSuccess(snapshot) {
     let notesDTO: NoteDTO[] = [];
     snapshot.forEach(doc => {
       let note = new Note().convertPlainToObject(doc.data());
       let noteDTO = new NoteDTO(doc.id, note);
       notesDTO.push(noteDTO);
     });
-    this.res.json(notesDTO);
+    this.resp.json(notesDTO);
   }
 
-  private callBackErr(err) {
-    this.res.status(500).json(err);
+  callBackErr(err) {
+    this.resp.status(500).json(err);
   }
 }

@@ -24,19 +24,19 @@ export class NotesRouter extends NavigationRoutes {
 
   private defineRouteFindAllNotes() {
     this.getRouter().get((req: Request, res: Response) => {
-      new NoteService(req, res).findAllNotes();
+      new NoteService(req, res).findAll();
     });
   }
 
   private defineRouteSaveNote() {
     this.getRouter().post((req: Request, res: Response) => {
-      new NoteService(req, res).saveNote();
+      new NoteService(req, res).save();
     });
   }
 
   private defineRouteUpdateNote() {
     this.getRouter().put((req: Request, res: Response) => {
-      new NoteService(req, res).updateNote();
+      new NoteService(req, res).update();
     });
   }
 
@@ -44,7 +44,7 @@ export class NotesRouter extends NavigationRoutes {
     this.app
       .route(this.getBaseUrl() + '/:id')
       .delete((req: Request, res: Response) =>
-        new NoteService(req, res).deleteNote()
+        new NoteService(req, res).delete()
       );
   }
 
