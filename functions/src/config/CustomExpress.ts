@@ -6,11 +6,10 @@ import { RoutesStack } from '../routes/RoutesStack';
 
 class App {
   public app: express.Application;
-  private routesStack: RoutesStack = new RoutesStack();
   constructor() {
     this.app = express();
     this.defineMiddleware();
-    this.defineRoutes();
+    this.publishRoutes();
   }
 
   private defineMiddleware(): void {
@@ -20,8 +19,9 @@ class App {
     this.app.use(expressValidator());
   }
 
-  private defineRoutes(): void {
-    this.routesStack.run(this.app);
+  private publishRoutes(): void {
+    let routesStack = new RoutesStack(this.app);
+    routesStack.publishRoutes();
   }
 }
 

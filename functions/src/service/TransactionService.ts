@@ -24,7 +24,7 @@ export class TransactionService implements Service<Transaction, TransactionDTO>{
         let transaction = new Transaction().convertPlainToObject(this.req.body);
         new TransactionRepository().save(
             transaction,
-            () => this.callBackSuccess('Transação criada com sucesso', 200),
+            () => this.callBackSuccess('Transação criada com sucesso', 201),
             err => this.callBackErr(err)
         )
     }
@@ -52,13 +52,26 @@ export class TransactionService implements Service<Transaction, TransactionDTO>{
     }
 
     findAll() {
-        throw new Error("Method not implemented.");
+        new TransactionRepository().findAll(
+            snapshot => this.callBackFindAllSuccess(snapshot),
+            err => this.callBackErr(err)
+        )
     }
     findById() {
-        throw new Error("Method not implemented.");
+        let id = this.req.params.id;
+        new TransactionRepository().findById(
+            id,
+            doc => this.callBackFindByIdSuccess(doc),
+            err => this.callBackErr(err)
+        )
     }
     delete() {
-        throw new Error("Method not implemented.");
+        let id = this.req.params.id;
+        new TransactionRepository().delete(
+            id,
+            () => this.callBackSuccess('Transação removida com sucesso'),
+            err => this.callBackErr(err)
+        );
     }
 
     validateData(args: any[]) {
@@ -66,11 +79,19 @@ export class TransactionService implements Service<Transaction, TransactionDTO>{
         return this.req.validationErrors();
     }
 
-    callBackFindAllSuccess(snapshot: any) {
-        throw new Error("Method not implemented.");
+    callBackFindAllSuccess(snapshot) {
+        let transactionsDTO: TransactionDTO[] = [];
+        snapshot.forEach(doc => {
+            let transaction = new Transaction().convertPlainToObject(doc.data());
+            let transactionDTO = new TransactionDTO(doc.id, transaction);
+            transactionsDTO.push(transactionDTO);
+        });
+        this.resp.json(transactionsDTO);
     }
-    callBackFindByIdSuccess(doc: any) {
-        throw new Error("Method not implemented.");
+    callBackFindByIdSuccess(doc) {
+        let transaction = new Transaction().convertPlainToObject(doc.data());
+        let transactionDTO = new TransactionDTO(doc.id, transaction);
+        this.resp.json(transactionDTO);
     }
 
     callBackSuccess(msg: string, status: number = 200) {

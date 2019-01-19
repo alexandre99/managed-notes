@@ -1,15 +1,29 @@
-import { classToPlain, plainToClass } from "class-transformer";
+import { classToPlain, plainToClass, Exclude } from "class-transformer";
 import { Model } from "../Model";
-import { TypeCategory } from "../TypeCategory";
+import { TypeTransaction } from "../TypeTransaction";
 
 export class Transaction implements Model<Transaction> {
-    constructor(private value?: String,
-        private typeCategory?: TypeCategory,
-        private date?: Date,
-        private category = 'indefinida') { }
+
+    private value: string;
+    @Exclude() private typeTransaction?: TypeTransaction;
+    private date: Date;
+    private category = 'indefinida';
+
+    constructor() { }
+
     convertPlainToObject(plain: any): Transaction {
         return plainToClass(Transaction, plain as Object);
-    } convertObjectToPlain() {
+    }
+
+    convertObjectToPlain() {
         return classToPlain(this);
+    }
+
+    get type(): string {
+        return TypeTransaction[this.typeTransaction];
+    }
+
+    set type(typeTransaction: string) {
+        this.typeTransaction = TypeTransaction[typeTransaction];
     }
 }

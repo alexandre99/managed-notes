@@ -15,7 +15,8 @@ export class TransactionRepository implements Repository<Transaction, Transactio
             .add(transaction.convertObjectToPlain())
             .then(callBackSuccess)
             .catch(callBackErr);
-    } findAll(callBackSuccess: any, callBackErr: any) {
+    }
+    findAll(callBackSuccess: any, callBackErr: any) {
         this.transactionsCollection
             .get()
             .then(callBackSuccess)

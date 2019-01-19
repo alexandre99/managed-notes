@@ -5,7 +5,7 @@ export abstract class NavigationRoutes {
   constructor(protected app: express.Application) {
     this.setBaseUrl();
   }
-  abstract defineRoutes(): void;
+  abstract publishRoutes(): void;
   protected abstract getBaseUrl(): string;
   private setBaseUrl(): void {
     this.router = this.app.route(this.getBaseUrl());

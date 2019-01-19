@@ -1,8 +1,8 @@
 import * as express from 'express';
 import { Request, Response } from 'express';
-import { NavigationRoutes } from '../NavigationRoutes';
-import { NoteService } from './../../service/NoteService';
-import { Constantes } from './../../util/Constantes';
+import { NavigationRoutes } from './NavigationRoutes';
+import { NoteService } from '../service/NoteService';
+import { Constantes } from '../util/Constantes';
 
 export class NotesRouter extends NavigationRoutes {
   constructor(app: express.Application) {
@@ -13,7 +13,7 @@ export class NotesRouter extends NavigationRoutes {
     return Constantes.END_POINT_NOTES;
   }
 
-  defineRoutes() {
+  publishRoutes() {
     this.defineRouteFindAllNotes();
     this.defineRouteSaveNote();
     this.defineRouteFindByTitle();
