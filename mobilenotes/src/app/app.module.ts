@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { RouterModule, RouteReuseStrategy, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,12 +10,16 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicGestureConfig } from './services/ionic-gesture-config.service';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt, 'pt');
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
-  BrowserModule,
+    BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule
@@ -27,7 +31,8 @@ import { IonicGestureConfig } from './services/ionic-gesture-config.service';
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: IonicGestureConfig
-    }
+    },
+    { provide: LOCALE_ID, useValue: 'pt' }
   ],
   bootstrap: [AppComponent]
 })

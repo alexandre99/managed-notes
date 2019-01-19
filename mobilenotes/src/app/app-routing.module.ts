@@ -22,11 +22,16 @@ const routes: Routes = [
     path: RegisterNotePage.pageName + '/:id',
     loadChildren:
       './pages/register-note/register-note.module#RegisterNotePageModule'
+  },
+  {
+    path: 'list-transactions',
+    loadChildren: './pages/list-transactions/list-transactions.module#ListTransactionsPageModule'
   }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

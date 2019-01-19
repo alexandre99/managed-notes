@@ -12,10 +12,10 @@ import { NoteService } from './../../services/note.service';
   templateUrl: './list-notes.page.html',
   styleUrls: ['./list-notes.page.scss']
 })
-export class ListNotesPage implements OnInit, OnDestroy {
+export class ListNotesPage implements OnInit {
   static pageName = 'list-notes';
   notesDTO: NoteDTO[] = [];
-  loading: any;
+  private loading: any;
   constructor(
     private noteService: NoteService,
     private loadingController: LoadingController,
@@ -25,10 +25,6 @@ export class ListNotesPage implements OnInit, OnDestroy {
   ) { }
   ngOnInit(): void {
     this.inicializarLista();
-  }
-
-  ngOnDestroy(): void {
-    console.log('morreu a lista');
   }
 
   inicializarLista(refresher?: any) {
@@ -50,7 +46,7 @@ export class ListNotesPage implements OnInit, OnDestroy {
 
   findByTitle(searchBar?: any) {
     let title: string = searchBar.srcElement.value;
-    if(title) {
+    if (title) {
       from(this.presentLoading()).subscribe(() => {
         this.noteService.findByTitle(title).subscribe(notesDTO => {
           this.zone.run(() => this.notesDTO = notesDTO);

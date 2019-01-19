@@ -5,9 +5,9 @@ import { TypeTransaction } from "../TypeTransaction";
 export class Transaction implements Model<Transaction> {
 
     private value: string;
-    @Exclude() private typeTransaction?: TypeTransaction;
+    @Exclude() private typeTransaction: TypeTransaction;
     private date: Date;
-    private category = 'indefinida';
+    private category: string = 'indefinida';
 
     constructor() { }
 
