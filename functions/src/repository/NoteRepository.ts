@@ -1,7 +1,7 @@
 import { Repository } from './Repository';
-import { Note } from '../model/Note/Note';
+import { Note } from '../model/note/Note';
 import { FirebaseDbHelper } from './../helper/FirebaseDbHelper';
-import { NoteDTO } from '../model/Note/NoteDTO';
+import { NoteDTO } from '../model/note/NoteDTO';
 export class NoteRepository implements Repository<Note, NoteDTO> {
   private notesCollection;
   constructor() {

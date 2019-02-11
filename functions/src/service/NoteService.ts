@@ -1,7 +1,7 @@
-import { Note } from '../model/Note/Note';
+import { Note } from '../model/note/Note';
 import { NoteRepository } from '../repository/NoteRepository';
 import { Response, Request } from 'express';
-import { NoteDTO } from './../model/Note/NoteDTO';
+import { NoteDTO } from './../model/note/NoteDTO';
 import { Service } from './Service';
 export class NoteService implements Service<Note, NoteDTO> {
 
