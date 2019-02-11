@@ -1,3 +1,3 @@
 export enum TypeTransaction {
-    RECEITA = 'Receita', DESPESA = 'Despesa'
+    RECIPE = 'Receita', EXPENSE = 'Despesa'
 }

@@ -7,21 +7,20 @@
       Cadastro de Notas
     </ion-title>
   </ion-toolbar>
+  <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
+    <ion-fab-button color="dark" [disabled]="!noteDTOForm.valid" (click)="salvar()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-header>
-  
+
 
 <ion-content padding>
   <form [formGroup]="noteDTOForm">
     <ion-input disabled style="display:none;"></ion-input>
     <div formGroupName="note">
       <ion-input placeholder="Titulo" formControlName="title"></ion-input>
-      <ion-textarea class="areafull" cols="20" placeholder="Descrição" 
-        formControlName="description"></ion-textarea>
+      <ion-textarea class="areafull" cols="20" placeholder="Descrição" formControlName="description"></ion-textarea>
     </div>
   </form>
-  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
-    <ion-fab-button color="dark" [disabled]="!noteDTOForm.valid" (click)="salvar()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

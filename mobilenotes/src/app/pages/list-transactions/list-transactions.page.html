@@ -26,7 +26,8 @@
             </ion-item>
             <ion-item>
               <ion-icon name="ios-trending-up"></ion-icon>
-              <ion-label item-right text-right><strong>{{transactionDTO.transaction.value | currency: 'BRL': true}}</strong></ion-label>
+              <ion-label [class.expense] = "true"   
+                item-right text-right><strong>{{transactionDTO.transaction.value | currency: 'BRL': true}}</strong></ion-label>
             </ion-item>
           </ion-card-content>
         </ion-card>
