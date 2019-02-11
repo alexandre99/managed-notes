@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { Transaction } from "../model/transaction/Transaction";
-import { TransactionRepository } from "../repository/TransactionRepository";
-import { Service } from "./Service";
-import { TransactionDTO } from "../model/transaction/TransactionDTO";
+import { Request, Response } from 'express';
+import { Transaction } from '../model/transaction/Transaction';
+import { TransactionRepository } from '../repository/TransactionRepository';
+import { Service } from './Service';
+import { TransactionDTO } from '../model/transaction/TransactionDTO';
 
 export class TransactionService implements Service<Transaction, TransactionDTO>{
 
@@ -10,10 +10,10 @@ export class TransactionService implements Service<Transaction, TransactionDTO>{
 
     save() {
         const args = [
-            { field: "value", message: "O campo valor é obrigatório" },
-            { field: "category", message: "O campo categoria é obrigatório" },
-            { field: "typeCategory", message: "O campo tipo categoria é obrigatório" },
-            { field: "date", message: "O campo data é obrigatório" }
+            { field: 'value', message: 'O campo valor é obrigatório' },
+            { field: 'category', message: 'O campo categoria é obrigatório' },
+            { field: 'typeTransaction', message: 'O campo tipo transação é obrigatório' },
+            { field: 'date', message: 'O campo data é obrigatório' }
         ];
         let err = this.validateData(args);
         if (err) {
@@ -31,10 +31,10 @@ export class TransactionService implements Service<Transaction, TransactionDTO>{
 
     update() {
         const args = [
-            { field: "transaction.value", message: "O campo valor é obrigatório" },
-            { field: "transaction.category", message: "O campo categoria é obrigatório" },
-            { field: "transaction.typeCategory", message: "O campo tipo categoria é obrigatório" },
-            { field: "transaction.date", message: "O campo data é obrigatório" },
+            { field: 'transaction.value', message: 'O campo valor é obrigatório' },
+            { field: 'transaction.category', message: 'O campo categoria é obrigatório' },
+            { field: 'transaction.typeTransaction', message: 'O campo tipo transação é obrigatório' },
+            { field: 'transaction.date', message: 'O campo data é obrigatório' },
             { field: 'id', message: 'O campo id é obrigatório' }
         ];
 
