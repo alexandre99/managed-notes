@@ -1,4 +1,4 @@
-import { classToPlain, plainToClass, Exclude } from "class-transformer";
+import { classToPlain, plainToClass, Exclude, Expose } from "class-transformer";
 import { Model } from "../Model";
 import { TypeTransaction } from "../TypeTransaction";
 
@@ -23,6 +23,7 @@ export class Transaction implements Model<Transaction> {
         return TypeTransaction[this.typeTransaction];
     }
 
+    @Expose({name: 'typeTransaction'})
     set type(typeTransaction: string) {
         this.typeTransaction = TypeTransaction[typeTransaction];
     }
