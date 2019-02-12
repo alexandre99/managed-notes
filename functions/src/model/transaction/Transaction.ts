@@ -5,7 +5,8 @@ import { TypeTransaction } from "../TypeTransaction";
 export class Transaction implements Model<Transaction> {
 
     private value: string;
-    @Exclude() private typeTransaction: TypeTransaction;
+    @Expose({name: 'typeTransaction'}) 
+    private type: TypeTransaction;
     private date: Date;
     private category: string = 'indefinida';
 
@@ -19,12 +20,12 @@ export class Transaction implements Model<Transaction> {
         return classToPlain(this);
     }
 
-    get type(): string {
-        return TypeTransaction[this.typeTransaction];
+    get typeTransaction(): string {
+        return TypeTransaction[this.type];
     }
 
-    @Expose({name: 'typeTransaction'})
-    set type(typeTransaction: string) {
-        this.typeTransaction = TypeTransaction[typeTransaction];
+    
+    set typeTransaction(type: string) {
+        this.type = TypeTransaction[type];
     }
 }
