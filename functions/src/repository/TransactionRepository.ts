@@ -1,7 +1,7 @@
 import { Repository } from "./Repository";
 import { TransactionDTO } from "../model/transaction/TransactionDTO";
 import { FirebaseDbHelper } from "../helper/FirebaseDbHelper";
-import { Transaction } from "../model/transaction/transaction";
+import { Transaction } from "../model/transaction/Transaction";
 
 export class TransactionRepository implements Repository<Transaction, TransactionDTO> {
     private transactionsCollection;
