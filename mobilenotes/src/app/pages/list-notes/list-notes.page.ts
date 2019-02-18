@@ -12,7 +12,7 @@ import { NoteService } from './../../services/note.service';
   templateUrl: './list-notes.page.html',
   styleUrls: ['./list-notes.page.scss']
 })
-export class ListNotesPage implements OnInit {
+export class ListNotesPage {
   static pageName = 'list-notes';
   notesDTO: NoteDTO[] = [];
   private loading: any;
@@ -23,7 +23,8 @@ export class ListNotesPage implements OnInit {
     private router: Router,
     private zone: NgZone
   ) { }
-  ngOnInit(): void {
+
+  ionViewDidEnter() {
     this.inicializarLista();
   }
 

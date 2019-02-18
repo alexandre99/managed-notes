@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button defaultUrl="/list-notes"></ion-back-button>
     </ion-buttons>
@@ -8,7 +8,7 @@
     </ion-title>
   </ion-toolbar>
   <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
-    <ion-fab-button color="dark" [disabled]="!noteDTOForm.valid" (click)="salvar()">
+    <ion-fab-button color="medium" [disabled]="!noteDTOForm.valid" (click)="salvar()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
