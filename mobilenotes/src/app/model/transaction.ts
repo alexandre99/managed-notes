@@ -2,8 +2,9 @@ import { TypeTransaction } from "./typeTransaction";
 
 export class Transaction {
     constructor(
-        public value?: string, 
-        public typeTransaction?: TypeTransaction, 
-        public date?: Date, 
-        category: string = 'indefinida') { }
+        public value?: number,
+        public typeTransaction?: TypeTransaction,
+        public date?: Date,
+        public category: string = 'indefinida') { }
+
 }

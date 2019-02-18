@@ -3,6 +3,8 @@ import { TransactionService } from '../../services/transaction.service';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
 import { TransactionDTO } from '../../model/transactionDTO';
+import { Transaction } from '../../model/transaction';
+import { TypeTransaction } from '../../model/typeTransaction';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -29,14 +31,19 @@ export class ListTransactionsPage implements OnInit {
   }
 
   findAllTransactions(refresher?: any) {
+    let that = this;
     this.transactionService.findAll().subscribe(
-      transactionsDTO => {
-        this.zone.run(() => (this.transactionsDTO = transactionsDTO));
+      (transactions: TransactionDTO[]) => {
+        transactions.forEach((dto: TransactionDTO) => {
+          let typeTransaction: TypeTransaction = TypeTransaction[dto.transaction.typeTransaction];
+          dto.transaction.typeTransaction = typeTransaction;
+        });
+        this.transactionsDTO = transactions;
         this.hideComponentLoading(refresher);
       },
       (err: HttpErrorResponse) => {
         this.hideComponentLoading(refresher);
-        this.showMessageError('Falha ao consultar as notas');
+        this.showMessageError('Falha ao consultar as transações');
       }
     );
   }
@@ -62,6 +69,10 @@ export class ListTransactionsPage implements OnInit {
       buttons: ['Ok']
     });
     await alert.present();
+  }
+
+  iconTransaction(transaction: Transaction): string {
+    return transaction.typeTransaction == TypeTransaction.EXPENSE ? 'trending-down' : 'trending-up';
   }
 
 }

@@ -1,12 +1,12 @@
-import { classToPlain, plainToClass, Exclude, Expose } from "class-transformer";
+import { classToPlain, Exclude, plainToClass } from "class-transformer";
 import { Model } from "../Model";
 import { TypeTransaction } from "../TypeTransaction";
 
 export class Transaction implements Model<Transaction> {
 
-    private value: string;
-    @Expose({name: 'typeTransaction'}) 
-    private type: TypeTransaction;
+    private value: number;
+    @Exclude({ toPlainOnly: true })
+    private typeTransaction: TypeTransaction;
     private date: Date;
     private category: string = 'indefinida';
 
@@ -17,15 +17,9 @@ export class Transaction implements Model<Transaction> {
     }
 
     convertObjectToPlain() {
-        return classToPlain(this);
-    }
-
-    get typeTransaction(): string {
-        return TypeTransaction[this.type];
-    }
-
-    
-    set typeTransaction(type: string) {
-        this.type = TypeTransaction[type];
+        let typeTransaction = this.typeTransaction;
+        let transactionPlain = <any> classToPlain(this);
+        transactionPlain.typeTransaction = typeTransaction;
+        return transactionPlain
     }
 }
