@@ -19,8 +19,7 @@ export class ListTransactionsPage implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private alertController: AlertController,
-    private loadingController: LoadingController,
-    private zone: NgZone) { }
+    private loadingController: LoadingController) { }
 
   ngOnInit(): void {
     this.inicializarLista();

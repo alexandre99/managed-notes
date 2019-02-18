@@ -19,12 +19,6 @@ export class AppComponent {
       typeNavigation: 'root'
     },
     {
-      title: 'Cadastro de Notas',
-      url: '/' + RegisterNotePage.pageName,
-      icon: 'add-circle',
-      typeNavigation: 'root'
-    },
-    {
       title: 'Transações',
       url: '/' + ListTransactionsPage.pageName,
       icon: 'cash',

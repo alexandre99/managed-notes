@@ -6,7 +6,7 @@ import { ListNotesPage } from './pages/list-notes/list-notes.page';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: ListNotesPage.pageName,
+    redirectTo: '/' + ListNotesPage.pageName,
     pathMatch: 'full'
   },
   {
