@@ -12,11 +12,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { IonicGestureConfig } from './services/ionic-gesture-config.service';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
 
 registerLocaleData(localePt, 'pt');
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserDetailComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
