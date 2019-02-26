@@ -1,0 +1,13 @@
+@mixin with100 {
+    width: 100%; 
+}
+
+.withHundred {
+    @include with100;
+}
+
+.itemCard {
+    @include with100;
+    padding: 0%;
+}
+

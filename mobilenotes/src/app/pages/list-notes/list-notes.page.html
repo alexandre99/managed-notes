@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="orange">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -17,10 +17,10 @@
     <ion-searchbar debounce="500" placeholder="Título" (ionChange)="findByTitle($event);"></ion-searchbar>
   </ion-item>
   <ion-list>
-    <ion-item-sliding style="width: 100%" *ngFor="let noteDTO of notesDTO" [routerLink]="['/register-note', noteDTO.id]"
+    <ion-item-sliding class="withHundred" *ngFor="let noteDTO of notesDTO" [routerLink]="['/register-note', noteDTO.id]"
       [routerDirection]="forward">
-      <ion-item style="width: 100%; padding: 0%;">
-        <ion-card style="width: 100%; padding: 0%;">
+      <ion-item class="itemCard">
+        <ion-card class="withHundred" no-padding color="light">
           <ion-card-header>
             <ion-card-title> {{noteDTO.note.title}}</ion-card-title>
           </ion-card-header>
@@ -37,6 +37,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-input disabled placeholder="Inserir uma nota" [routerLink]="['/register-note']" [routerDirection]="forward"></ion-input>
+    <ion-input disabled placeholder="Inserir uma nota" [routerLink]="['/register-note']" [routerDirection]="forward">
+    </ion-input>
   </ion-toolbar>
 </ion-footer>
