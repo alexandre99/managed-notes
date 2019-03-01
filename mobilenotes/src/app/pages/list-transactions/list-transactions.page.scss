@@ -14,7 +14,23 @@
     @include with100;
 }
 
+.itemTotalizer {
+    margin-top: 10px;
+}
+
+.cardTotalizer {
+    @include with100;
+    height: 100%;
+}
+
 .itemCard {
     @include with100;
     padding: 0%;
+}
+
+.buttonInsert {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;   
+    z-index: 10000;
 }
