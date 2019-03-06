@@ -16,28 +16,29 @@
   <ion-item>
     <ion-searchbar debounce="500" placeholder="Título" (ionChange)="findByTitle($event);"></ion-searchbar>
   </ion-item>
-  <ion-list>
-    <ion-item-sliding class="withHundred" *ngFor="let noteDTO of notesDTO" [routerLink]="['/register-note', noteDTO.id]"
-      [routerDirection]="forward">
-      <ion-item class="itemCard">
-        <ion-card class="withHundred" no-padding color="light">
-          <ion-card-header>
-            <ion-card-title> {{noteDTO.note.title}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            {{noteDTO.note.description}}
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
-      <ion-item-options side="end" (ionSwipe)="deleteNote(noteDTO.id)">
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-</ion-content>
+  <div class="listNotes">
+    <ion-list>
+      <ion-item-sliding class="withHundred" *ngFor="let noteDTO of notesDTO"
+        [routerLink]="['/register-note', noteDTO.id]" [routerDirection]="forward">
+        <ion-item class="itemCard">
+          <ion-card class="withHundred" no-padding color="light">
+            <ion-card-header>
+              <ion-card-title> {{noteDTO.note.title}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{noteDTO.note.description}}
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        <ion-item-options side="end" (ionSwipe)="deleteNote(noteDTO.id)">
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-input disabled placeholder="Inserir uma nota" [routerLink]="['/register-note']" [routerDirection]="forward">
-    </ion-input>
-  </ion-toolbar>
-</ion-footer>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="orange" [routerLink]="['/register-note']" [routerDirection]="forward">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

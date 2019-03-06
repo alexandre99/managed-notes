@@ -31,25 +31,32 @@
       </ion-card-content>
     </ion-card>
   </ion-item>
-  <ion-list>
-    <ion-item-sliding class="withHundred" *ngFor="let transactionDTO of transactionsDTO" [routerDirection]="'root'">
-      <ion-item class="itemCard">
-        <ion-card class="withHundred" no-padding color="light">
-          <ion-card-content>
-            <ion-item>
-              <ion-label text-start>{{transactionDTO.transaction.category}}</ion-label>
-              <ion-label item-right text-right>{{transactionDTO.transaction.date | date: 'dd/MM/yyyy'}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-icon [name]="iconTransaction(transactionDTO.transaction)"></ion-icon>
-              <ion-label [class.expense]="'Despesa' == transactionDTO.transaction.typeTransaction" item-right
-                text-right><strong>{{transactionDTO.transaction.value | currency: 'BRL': true}}</strong></ion-label>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
-      <ion-item-options>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+  <div class="listTransaction">
+    <ion-list>
+      <ion-item-sliding class="withHundred" *ngFor="let transactionDTO of transactionsDTO" [routerDirection]="'root'">
+        <ion-item class="itemCard">
+          <ion-card class="withHundred" no-padding color="light">
+            <ion-card-content>
+              <ion-item>
+                <ion-label text-start>{{transactionDTO.transaction.category}}</ion-label>
+                <ion-label item-right text-right>{{transactionDTO.transaction.date | date: 'dd/MM/yyyy'}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon [name]="iconTransaction(transactionDTO.transaction)"></ion-icon>
+                <ion-label [class.expense]="'Despesa' == transactionDTO.transaction.typeTransaction" item-right
+                  text-right><strong>{{transactionDTO.transaction.value | currency: 'BRL': true}}</strong></ion-label>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+        <ion-item-options>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="orange">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
