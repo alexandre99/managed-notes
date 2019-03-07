@@ -18,15 +18,15 @@
       <ion-card-content no-padding>
         <ion-item class="heightThirty">
           <ion-label text-start>Receitas: </ion-label>
-          <ion-label text-end>20,00</ion-label>
+          <ion-label text-end>{{recipe | currency: 'BRL': true}}</ion-label>
         </ion-item>
         <ion-item class="heightThirty">
           <ion-label text-start>Despesas: </ion-label>
-          <ion-label text-end class="expense">10,00</ion-label>
+          <ion-label text-end class="expense">{{expense | currency: 'BRL': true}}</ion-label>
         </ion-item>
         <ion-item class="heightThirty">
           <ion-label text-start>Total: </ion-label>
-          <ion-label text-end>10,00</ion-label>
+          <ion-label text-end>{{valuesTotalizer | currency: 'BRL': true}}</ion-label>
         </ion-item>
       </ion-card-content>
     </ion-card>

@@ -13,9 +13,16 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./list-transactions.page.scss'],
 })
 export class ListTransactionsPage implements OnInit {
+  
   static pageName = 'list-transactions';
+  
   transactionsDTO: TransactionDTO[] = [];
+  recipe: number = 0.00;
+  expense: number = 0.00;
+  valuesTotalizer: number = 0.00;
+
   private loading: any;
+
   constructor(
     private transactionService: TransactionService,
     private alertController: AlertController,
