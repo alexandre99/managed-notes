@@ -11,7 +11,7 @@ import { NoteService } from '../../services/note.service';
   templateUrl: './register-note.page.html',
   styleUrls: ['./register-note.page.scss']
 })
-export class RegisterNotePage implements OnInit, OnDestroy {
+export class RegisterNotePage implements OnInit {
   static pageName = 'register-note';
   noteDTOForm: FormGroup;
   loading: any;
@@ -37,10 +37,6 @@ export class RegisterNotePage implements OnInit, OnDestroy {
       );
     }
   }
-
-  ngOnDestroy(): void {
-    console.log('morreu register note');
-   }
 
    private iniciarFormGroup() {
     this.noteDTOForm = new FormGroup({

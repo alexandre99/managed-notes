@@ -1,3 +1,5 @@
+import { RegisterTransactionPage } from './pages/register-transaction/register-transaction.page';
+import { ListTransactionsPage } from './pages/list-transactions/list-transactions.page';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegisterNotePage } from './../app/pages/register-note/register-note.page';
@@ -15,17 +17,18 @@ const routes: Routes = [
   },
   {
     path: RegisterNotePage.pageName,
-    loadChildren:
-      './pages/register-note/register-note.module#RegisterNotePageModule'
+    loadChildren: './pages/register-note/register-note.module#RegisterNotePageModule'
   },
   {
     path: RegisterNotePage.pageName + '/:id',
-    loadChildren:
-      './pages/register-note/register-note.module#RegisterNotePageModule'
+    loadChildren: './pages/register-note/register-note.module#RegisterNotePageModule'
   },
   {
-    path: 'list-transactions',
+    path: ListTransactionsPage.pageName,
     loadChildren: './pages/list-transactions/list-transactions.module#ListTransactionsPageModule'
+  },
+  { path: RegisterTransactionPage.pageName, 
+    loadChildren: './pages/register-transaction/register-transaction.module#RegisterTransactionPageModule' 
   }
 
 ];
