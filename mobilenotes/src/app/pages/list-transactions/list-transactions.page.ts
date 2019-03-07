@@ -46,6 +46,7 @@ export class ListTransactionsPage implements OnInit {
         });
         this.transactionsDTO = transactions;
         this.hideComponentLoading(refresher);
+        this.updateTotalizer();
       },
       (err: HttpErrorResponse) => {
         this.hideComponentLoading(refresher);
@@ -81,4 +82,16 @@ export class ListTransactionsPage implements OnInit {
     return transaction.typeTransaction == TypeTransaction.EXPENSE ? 'trending-down' : 'trending-up';
   }
 
+  updateTotalizer() {
+    this.recipe = this.sumBy(TypeTransaction.RECIPE);
+    this.expense = this.sumBy(TypeTransaction.EXPENSE);
+    this.valuesTotalizer = this.recipe - this.expense;
+  }
+
+  sumBy(typeTransaction: TypeTransaction): number {
+    return this.transactionsDTO.map((transactionDto: TransactionDTO) => transactionDto.transaction)
+                                .filter((transaction: Transaction) => transaction.typeTransaction === typeTransaction)
+                                .map((transaction: Transaction) => transaction.value)
+                                .reduce((accumulator, currentValue ) => accumulator + currentValue, 0);
+  }
 }
