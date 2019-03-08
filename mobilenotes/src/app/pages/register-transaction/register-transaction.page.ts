@@ -1,13 +1,14 @@
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
+import { Transaction } from '../../model/transaction';
+import { TransactionDTO } from '../../model/transactionDTO';
 import { TransactionService } from '../../services/transaction.service';
 import { NumberValidator } from '../../util/validators/number.validator';
-import { TransactionDTO } from '../../model/transactionDTO';
-import { Transaction } from '../../model/transaction';
 
 @Component({
   selector: 'app-register-transaction',
