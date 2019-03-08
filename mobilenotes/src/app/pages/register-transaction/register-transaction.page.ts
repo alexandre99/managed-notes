@@ -1,8 +1,8 @@
-import { TransactionService } from './../../../../../functions/src/service/TransactionService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-register-transaction',
