@@ -1,11 +1,13 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { from } from 'rxjs';
+import { NoteDTO } from '../../model/noteDTO';
 import { NoteService } from '../../services/note.service';
+import { Note } from './../../model/note';
 @Component({
   selector: 'app-register-note',
   templateUrl: './register-note.page.html',
@@ -23,22 +25,26 @@ export class RegisterNotePage implements OnInit {
     private location: Location,
     private formBuilder: FormBuilder,
     private noteService: NoteService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const id: string = this.route.snapshot.params['id'];
-    this.iniciarFormGroup();
+    this.initFormGroup();
     if (id) {
-      from(this.presentLoading()).subscribe(() =>
-        this.noteService.findById(id).subscribe(noteDTO => {
-          this.loading.dismiss();
-          this.noteDTOForm.setValue(noteDTO);
-        })
-      );
+      this.loadingNoteForUpdate(id);
     }
   }
 
-   private iniciarFormGroup() {
+  private loadingNoteForUpdate(id: string) {
+    from(this.presentLoading()).subscribe(() =>
+      this.noteService.findById(id).subscribe(noteDTO => {
+        this.loading.dismiss();
+        this.noteDTOForm.setValue(noteDTO);
+      })
+    );
+  }
+
+  private initFormGroup() {
     this.noteDTOForm = new FormGroup({
       id: this.formBuilder.control(''),
       note: new FormGroup({
@@ -48,28 +54,36 @@ export class RegisterNotePage implements OnInit {
     });
   }
 
-  salvar() {
+  saveOrUpdate() {
     const noteDTO = this.noteDTOForm.value;
     const note = noteDTO.note;
     from(this.presentLoading()).subscribe(() => {
       if (!noteDTO.id) {
-        this.noteService
-          .save(note)
-          .subscribe(
-            data => this.callBackSaveSuccess(data.message),
-            (error: HttpErrorResponse) =>
-              this.callBackSaveError(error, 'Erro ao tentar salvar nota')
-          );
+        this.save(note);
       } else {
-        this.noteService
-          .update(noteDTO)
-          .subscribe(
-            data => this.callBackSaveSuccess(data.message),
-            (error: HttpErrorResponse) =>
-              this.callBackSaveError(error, 'Erro ao tentar atualizar nota')
-          );
+        this.update(noteDTO);
       }
     });
+  }
+
+  private update(noteDTO: NoteDTO) {
+    this.noteService
+      .update(noteDTO)
+      .subscribe(
+        data => this.callBackSaveSuccess(data.message),
+        (error: HttpErrorResponse) =>
+          this.callBackSaveError(error, 'Erro ao tentar atualizar nota')
+      );
+  }
+
+  private save(note: Note) {
+    this.noteService
+      .save(note)
+      .subscribe(
+        data => this.callBackSaveSuccess(data.message),
+        (error: HttpErrorResponse) =>
+          this.callBackSaveError(error, 'Erro ao tentar salvar nota')
+      );
   }
 
   private callBackSaveError(error, message) {
@@ -80,7 +94,7 @@ export class RegisterNotePage implements OnInit {
 
   private callBackSaveSuccess(message) {
     this.loading.dismiss();
-    from(this.showMessageSucess(message)).subscribe(() =>  this.location.back());
+    from(this.showMessageSucess(message)).subscribe(() => this.location.back());
   }
 
   async presentLoading() {
@@ -96,7 +110,7 @@ export class RegisterNotePage implements OnInit {
       message: message,
       buttons: ['Ok']
     });
-   return await alert.present();
+    return await alert.present();
   }
 
   private async showMessageSucess(message: string) {

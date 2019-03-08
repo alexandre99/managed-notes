@@ -1,8 +1,13 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { from } from 'rxjs';
 import { TransactionService } from '../../services/transaction.service';
+import { NumberValidator } from '../../util/validators/number.validator';
+import { TransactionDTO } from '../../model/transactionDTO';
+import { Transaction } from '../../model/transaction';
 
 @Component({
   selector: 'app-register-transaction',
@@ -26,16 +31,75 @@ export class RegisterTransactionPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    const id: string = this.route.snapshot.params['id'];
+    this.initFormGroup();
+    if (id) {
+      this.loadingTransactionForUpdate(id);
+    }
   }
 
-  private iniciarFormGroup() {
+  private loadingTransactionForUpdate(id: string) {
+    from(this.presentLoading()).subscribe(() =>
+      this.transactionService.findById(id).subscribe(transactionDTO => {
+        this.loading.dismiss();
+        this.transactionDTOForm.setValue(transactionDTO);
+      })
+    );
+  }
+
+  private initFormGroup() {
     this.transactionDTOForm = new FormGroup({
       id: this.formBuilder.control(''),
-      note: new FormGroup({
-        title: this.formBuilder.control('', [Validators.required]),
-        description: this.formBuilder.control('', [Validators.required])
+      transaction: new FormGroup({
+        value: this.formBuilder.control('', [Validators.required, NumberValidator.validGtZero]),
+        typeTransaction: this.formBuilder.control('', [Validators.required]),
+        date: this.formBuilder.control('', [Validators.required]),
+        category: this.formBuilder.control('', [Validators.required])
       })
     });
+  }
+
+  saveOrUpdate() {
+    const noteDTO = this.transactionDTOForm.value;
+    const note = noteDTO.note;
+    from(this.presentLoading()).subscribe(() => {
+      if (!noteDTO.id) {
+        this.save(note);
+      } else {
+        this.update(noteDTO);
+      }
+    });
+  }
+
+  private update(transactionDTO: TransactionDTO) {
+    this.transactionService
+      .update(transactionDTO)
+      .subscribe(
+        data => this.callBackSaveSuccess(data.message),
+        (error: HttpErrorResponse) =>
+          this.callBackSaveError(error, 'Erro ao tentar atualizar nota')
+      );
+  }
+
+  private save(transaction: Transaction) {
+    this.transactionService
+      .save(transaction)
+      .subscribe(
+        data => this.callBackSaveSuccess(data.message),
+        (error: HttpErrorResponse) =>
+          this.callBackSaveError(error, 'Erro ao tentar salvar nota')
+      );
+  }
+
+  private callBackSaveError(error, message) {
+    console.log(error);
+    this.loading.dismiss();
+    this.showMessageError(message);
+  }
+
+  private callBackSaveSuccess(message) {
+    this.loading.dismiss();
+    from(this.showMessageSucess(message)).subscribe(() => this.location.back());
   }
 
   async presentLoading() {
