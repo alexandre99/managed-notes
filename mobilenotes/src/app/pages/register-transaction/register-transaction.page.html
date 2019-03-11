@@ -8,7 +8,7 @@
     </ion-title>
   </ion-toolbar>
   <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
-    <ion-fab-button color="medium" [disabled]="!transactionDTOForm.valid" (click)="salvar()">
+    <ion-fab-button color="medium" [disabled]="!transactionDTOForm.valid" (click)="saveOrUpdate()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -23,13 +23,13 @@
         <ion-input placeholder="Categoria" formControlName="category"></ion-input>
       </ion-item>
       <ion-item lines="none">
-        <ion-input placeholder="Valor" formControlName="value"></ion-input>
+        <ion-input type="number" placeholder="Valor" formControlName="value"></ion-input>
       </ion-item>
       <ion-select placeholder="Tipo de Transação" formControlName="typeTransaction">
         <ion-select-option value="RECIPE">Receita</ion-select-option>
         <ion-select-option value="EXPENSE">Despesa</ion-select-option>
       </ion-select>
-      <ion-datetime placeholder="Data" display-format="DD/MM/YYYY" formControlName="date"></ion-datetime>
+      <ion-datetime (click)="selectDate()" [disabled]="true" placeholder="Data" display-format="DD/MM/YYYY" formControlName="date"></ion-datetime>
     </div>
   </form>
 </ion-content>

@@ -21,7 +21,6 @@ export class RegisterNotePage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private route: ActivatedRoute,
-    private router: Router,
     private location: Location,
     private formBuilder: FormBuilder,
     private noteService: NoteService
@@ -86,13 +85,13 @@ export class RegisterNotePage implements OnInit {
       );
   }
 
-  private callBackSaveError(error, message) {
+  private callBackSaveError(error, message: string) {
     console.log(error);
     this.loading.dismiss();
     this.showMessageError(message);
   }
 
-  private callBackSaveSuccess(message) {
+  private callBackSaveSuccess(message: string) {
     this.loading.dismiss();
     from(this.showMessageSucess(message)).subscribe(() => this.location.back());
   }

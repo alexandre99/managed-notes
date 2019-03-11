@@ -3,7 +3,6 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
 import { ListNotesPage } from './pages/list-notes/list-notes.page';
-import { RegisterNotePage } from './pages/register-note/register-note.page';
 import { ListTransactionsPage } from './pages/list-transactions/list-transactions.page';
 
 @Component({

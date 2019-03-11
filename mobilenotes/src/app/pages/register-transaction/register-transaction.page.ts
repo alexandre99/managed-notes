@@ -1,3 +1,4 @@
+import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -25,10 +26,10 @@ export class RegisterTransactionPage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private route: ActivatedRoute,
-    private router: Router,
     private location: Location,
     private formBuilder: FormBuilder,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private datePicker: DatePicker
   ) { }
 
   ngOnInit() {
@@ -54,20 +55,20 @@ export class RegisterTransactionPage implements OnInit {
       transaction: new FormGroup({
         value: this.formBuilder.control('', [Validators.required, NumberValidator.validGtZero]),
         typeTransaction: this.formBuilder.control('', [Validators.required]),
-        date: this.formBuilder.control(new Date(), [Validators.required]),
+        date: this.formBuilder.control(new Date().toISOString(), [Validators.required]),
         category: this.formBuilder.control('', [Validators.required])
       })
     });
   }
 
   saveOrUpdate() {
-    const noteDTO = this.transactionDTOForm.value;
-    const note = noteDTO.note;
+    const transactionDTO = this.transactionDTOForm.value;
+    const transaction = transactionDTO.transaction;
     from(this.presentLoading()).subscribe(() => {
-      if (!noteDTO.id) {
-        this.save(note);
+      if (!transactionDTO.id) {
+        this.save(transaction);
       } else {
-        this.update(noteDTO);
+        this.update(transactionDTO);
       }
     });
   }
@@ -92,13 +93,13 @@ export class RegisterTransactionPage implements OnInit {
       );
   }
 
-  private callBackSaveError(error, message) {
+  private callBackSaveError(error, message: string) {
     console.log(error);
     this.loading.dismiss();
     this.showMessageError(message);
   }
 
-  private callBackSaveSuccess(message) {
+  private callBackSaveSuccess(message: string) {
     this.loading.dismiss();
     from(this.showMessageSucess(message)).subscribe(() => this.location.back());
   }
@@ -126,6 +127,15 @@ export class RegisterTransactionPage implements OnInit {
       buttons: ['Ok']
     });
     return await alert.present();
+  }
+
+  selectDate() {
+    this.datePicker.show({
+      date: new Date(),
+      mode: 'date'
+    }).then(
+      selectedDate => this.transactionDTOForm.patchValue({ transaction: { date: selectedDate.toISOString() } })
+    );
   }
 
 }
