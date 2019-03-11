@@ -1,3 +1,4 @@
+import { TransactionBuilder } from './../../builder/transactionBuilder';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -62,8 +63,9 @@ export class RegisterTransactionPage implements OnInit {
   }
 
   saveOrUpdate() {
-    const transactionDTO = this.transactionDTOForm.value;
-    const transaction = transactionDTO.transaction;
+    let transactionDTO = this.transactionDTOForm.value;
+    const transaction = this.buildTransaction(transactionDTO.transaction);
+    transactionDTO.transaction = transaction;
     from(this.presentLoading()).subscribe(() => {
       if (!transactionDTO.id) {
         this.save(transaction);
@@ -73,13 +75,22 @@ export class RegisterTransactionPage implements OnInit {
     });
   }
 
+  private buildTransaction(transaction: any): Transaction {
+    let builder = new TransactionBuilder();
+    builder.addValue(transaction.value)
+            .addCategory(transaction.category)
+            .addDate(transaction.date)
+            .addTypeTransaction(transaction.typeTransaction);
+    return builder.build();
+  }
+
   private update(transactionDTO: TransactionDTO) {
     this.transactionService
       .update(transactionDTO)
       .subscribe(
         data => this.callBackSaveSuccess(data.message),
         (error: HttpErrorResponse) =>
-          this.callBackSaveError(error, 'Erro ao tentar atualizar nota')
+          this.callBackSaveError(error, 'Erro ao tentar atualizar transação')
       );
   }
 
@@ -89,7 +100,7 @@ export class RegisterTransactionPage implements OnInit {
       .subscribe(
         data => this.callBackSaveSuccess(data.message),
         (error: HttpErrorResponse) =>
-          this.callBackSaveError(error, 'Erro ao tentar salvar nota')
+          this.callBackSaveError(error, 'Erro ao tentar salvar transação')
       );
   }
 

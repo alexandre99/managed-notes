@@ -10,8 +10,8 @@ export class TransactionBuilder {
 
     constructor() { }
 
-    addValue(value: string): TransactionBuilder {
-        this.value = NumberUtils.parseNumber(value);
+    addValue(value: number): TransactionBuilder {
+        this.value = value;
         return this;
     }
 
