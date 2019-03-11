@@ -9,7 +9,7 @@ import { from } from 'rxjs';
 import { Transaction } from '../../model/transaction';
 import { TransactionDTO } from '../../model/transactionDTO';
 import { TransactionService } from '../../services/transaction.service';
-import { NumberValidator } from '../../util/validators/number.validator';
+import { NumberValidator } from '../../util/validators/numberValidator';
 
 @Component({
   selector: 'app-register-transaction',
