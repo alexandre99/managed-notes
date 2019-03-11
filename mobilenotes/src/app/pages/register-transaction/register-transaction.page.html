@@ -4,11 +4,11 @@
       <ion-back-button defaultUrl="/list-transactions"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      Cadastro de Notas
+      Cadastro de Transações
     </ion-title>
   </ion-toolbar>
   <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
-    <ion-fab-button color="medium" [disabled]="!noteDTOForm.valid" (click)="salvar()">
+    <ion-fab-button color="medium" [disabled]="!transactionDTOForm.valid" (click)="salvar()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -16,11 +16,20 @@
 
 
 <ion-content padding>
-  <form [formGroup]="noteDTOForm">
+  <form [formGroup]="transactionDTOForm">
     <ion-input disabled style="display:none;"></ion-input>
-    <div formGroupName="note">
-      <ion-input placeholder="Titulo" formControlName="title"></ion-input>
-      <ion-textarea class="areafull" cols="20" placeholder="Descrição" formControlName="description"></ion-textarea>
+    <div formGroupName="transaction">
+      <ion-item lines="none">
+        <ion-input placeholder="Categoria" formControlName="category"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-input placeholder="Valor" formControlName="value"></ion-input>
+      </ion-item>
+      <ion-select placeholder="Tipo de Transação" formControlName="typeTransaction">
+        <ion-select-option value="RECIPE">Receita</ion-select-option>
+        <ion-select-option value="EXPENSE">Despesa</ion-select-option>
+      </ion-select>
+      <ion-datetime placeholder="Data" display-format="DD/MM/YYYY" formControlName="date"></ion-datetime>
     </div>
   </form>
 </ion-content>

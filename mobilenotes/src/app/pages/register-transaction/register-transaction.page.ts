@@ -54,7 +54,7 @@ export class RegisterTransactionPage implements OnInit {
       transaction: new FormGroup({
         value: this.formBuilder.control('', [Validators.required, NumberValidator.validGtZero]),
         typeTransaction: this.formBuilder.control('', [Validators.required]),
-        date: this.formBuilder.control('', [Validators.required]),
+        date: this.formBuilder.control(new Date(), [Validators.required]),
         category: this.formBuilder.control('', [Validators.required])
       })
     });

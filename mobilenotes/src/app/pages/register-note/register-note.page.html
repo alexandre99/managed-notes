@@ -19,8 +19,12 @@
   <form [formGroup]="noteDTOForm">
     <ion-input disabled style="display:none;"></ion-input>
     <div formGroupName="note">
-      <ion-input placeholder="Titulo" formControlName="title"></ion-input>
-      <ion-textarea class="areafull" cols="20" placeholder="Descrição" formControlName="description"></ion-textarea>
+      <ion-item lines="none">
+        <ion-input placeholder="Titulo" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-textarea class="areafull" cols="20" placeholder="Descrição" formControlName="description"></ion-textarea>
+      </ion-item>
     </div>
   </form>
 </ion-content>
