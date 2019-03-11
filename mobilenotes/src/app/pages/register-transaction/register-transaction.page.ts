@@ -64,8 +64,7 @@ export class RegisterTransactionPage implements OnInit {
 
   saveOrUpdate() {
     let transactionDTO = this.transactionDTOForm.value;
-    const transaction = this.buildTransaction(transactionDTO.transaction);
-    transactionDTO.transaction = transaction;
+    const transaction = transactionDTO.transaction;
     from(this.presentLoading()).subscribe(() => {
       if (!transactionDTO.id) {
         this.save(transaction);
@@ -73,15 +72,6 @@ export class RegisterTransactionPage implements OnInit {
         this.update(transactionDTO);
       }
     });
-  }
-
-  private buildTransaction(transaction: any): Transaction {
-    let builder = new TransactionBuilder();
-    builder.addValue(transaction.value)
-            .addCategory(transaction.category)
-            .addDate(transaction.date)
-            .addTypeTransaction(transaction.typeTransaction);
-    return builder.build();
   }
 
   private update(transactionDTO: TransactionDTO) {

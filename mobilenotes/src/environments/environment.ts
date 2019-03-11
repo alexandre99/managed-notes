@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 export const environment = {
   production: false,
-  api: 'http://192.168.2.87:5000/managed-notes/us-central1/webApi/'
+  api: 'http://localhost:5000/managed-notes/us-central1/webApi/'
 };
 
 /*
