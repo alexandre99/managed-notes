@@ -37,7 +37,6 @@ export class ListTransactionsPage implements OnInit {
   }
 
   findAllTransactions(refresher?: any) {
-    let that = this;
     this.transactionService.findAll().subscribe(
       (transactions: TransactionDTO[]) => {
         transactions.forEach((dto: TransactionDTO) => {
