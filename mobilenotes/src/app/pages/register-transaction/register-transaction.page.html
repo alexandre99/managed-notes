@@ -23,13 +23,14 @@
         <ion-input placeholder="Categoria" formControlName="category"></ion-input>
       </ion-item>
       <ion-item lines="none">
-        <input-currency placeHolder="Valor" formControlName="value"></input-currency>
+        <ion-input placeholder="Valor" type="tel"></ion-input>
       </ion-item>
       <ion-select placeholder="Tipo de Transação" formControlName="typeTransaction">
         <ion-select-option value="RECIPE">Receita</ion-select-option>
         <ion-select-option value="EXPENSE">Despesa</ion-select-option>
       </ion-select>
-      <ion-datetime (click)="selectDate()" [disabled]="true" placeholder="Data" display-format="DD/MM/YYYY" formControlName="date"></ion-datetime>
+      <ion-datetime (click)="selectDate()" [disabled]="true" placeholder="Data" display-format="DD/MM/YYYY"
+        formControlName="date"></ion-datetime>
     </div>
   </form>
 </ion-content>
