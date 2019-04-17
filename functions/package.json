@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && firebase serve --only functions",
+    "start": "npm run build && firebase serve -o 0.0.0.0 --only functions",
     "shell": "npm run build && firebase functions:shell",
     "serve": "npm run shell",
     "deploy": "firebase deploy --only functions --debug",

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { DatePicker } from '@ionic-native/date-picker/ngx';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -22,6 +23,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RegisterTransactionPage]
+  declarations: [RegisterTransactionPage],
+  providers: [
+    DatePicker
+  ]
 })
 export class RegisterTransactionPageModule {}
