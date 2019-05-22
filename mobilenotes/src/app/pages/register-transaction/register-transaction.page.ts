@@ -10,6 +10,7 @@ import { Transaction } from '../../model/transaction';
 import { TransactionDTO } from '../../model/transactionDTO';
 import { TransactionService } from '../../services/transaction.service';
 import { NumberValidator } from '../../util/validators/numberValidator';
+import { NumberUtils } from '../../util/numberUtils';
 
 @Component({
   selector: 'app-register-transaction',
@@ -63,7 +64,9 @@ export class RegisterTransactionPage implements OnInit {
 
   saveOrUpdate() {
     let transactionDTO = this.transactionDTOForm.value;
-    const transaction = transactionDTO.transaction;
+    let transaction = transactionDTO.transaction;
+    const value = NumberUtils.parseNumber(transaction.value);
+    transaction.value = value;
     from(this.presentLoading()).subscribe(() => {
       if (!transactionDTO.id) {
         this.save(transaction);

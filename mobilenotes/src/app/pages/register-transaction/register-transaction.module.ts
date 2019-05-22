@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { DatePicker } from '@ionic-native/date-picker/ngx';
 
+import { BrMaskerModule } from 'br-mask';
+
 import { IonicModule } from '@ionic/angular';
 
 import { RegisterTransactionPage } from './register-transaction.page';
@@ -21,6 +23,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    BrMaskerModule,
     RouterModule.forChild(routes)
   ],
   declarations: [RegisterTransactionPage],
