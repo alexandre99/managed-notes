@@ -33,7 +33,8 @@
   </ion-item>
   <div class="listTransaction">
     <ion-list>
-      <ion-item-sliding class="withHundred" *ngFor="let transactionDTO of transactionsDTO" [routerDirection]="'root'">
+      <ion-item-sliding class="withHundred" *ngFor="let transactionDTO of transactionsDTO"
+        [routerLink]="['/register-transaction', transactionDTO.id]" [routerDirection]="forward">
         <ion-item class="itemCard">
           <ion-card class="withHundred" no-padding color="light">
             <ion-card-content>
@@ -49,7 +50,7 @@
             </ion-card-content>
           </ion-card>
         </ion-item>
-        <ion-item-options>
+        <ion-item-options side="end" (ionSwipe)="deleteTransaction(transactionDTO.id)">
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>

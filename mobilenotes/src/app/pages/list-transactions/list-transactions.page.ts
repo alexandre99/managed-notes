@@ -12,10 +12,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './list-transactions.page.html',
   styleUrls: ['./list-transactions.page.scss'],
 })
-export class ListTransactionsPage implements OnInit {
-  
+export class ListTransactionsPage {
+
   static pageName = 'list-transactions';
-  
+
   transactionsDTO: TransactionDTO[] = [];
   recipe: number = 0.00;
   expense: number = 0.00;
@@ -28,12 +28,16 @@ export class ListTransactionsPage implements OnInit {
     private alertController: AlertController,
     private loadingController: LoadingController) { }
 
-  ngOnInit(): void {
+  ionViewDidEnter() {
     this.inicializarLista();
   }
 
   inicializarLista(refresher?: any) {
     from(this.presentLoading()).subscribe(() => this.findAllTransactions(refresher));
+  }
+
+  deleteTransaction(id: string) {
+    this.presentAlertConfirm(id);
   }
 
   findAllTransactions(refresher?: any) {
@@ -89,8 +93,54 @@ export class ListTransactionsPage implements OnInit {
 
   sumBy(typeTransaction: TypeTransaction): number {
     return this.transactionsDTO.map((transactionDto: TransactionDTO) => transactionDto.transaction)
-                                .filter((transaction: Transaction) => transaction.typeTransaction === typeTransaction)
-                                .map((transaction: Transaction) => transaction.value)
-                                .reduce((accumulator, currentValue ) => accumulator + currentValue, 0);
+      .filter((transaction: Transaction) => transaction.typeTransaction === typeTransaction)
+      .map((transaction: Transaction) => transaction.value)
+      .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  }
+
+  async presentAlertConfirm(id: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirmação',
+      message: '<strong>Confirma a exclusão da Transação?</strong>',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: blah => { }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            from(this.presentLoading()).subscribe(() => {
+              this.transactionService.delete(id).subscribe(
+                data => {
+                  this.loading.dismiss();
+                  from(this.showMessageSuccess(data.message)).subscribe(() =>
+                    this.inicializarLista()
+                  );
+                },
+                (err: HttpErrorResponse) => {
+                  this.loading.dismiss();
+                  console.log(err);
+                  this.showMessageError('Falha ao consultar as transações');
+                }
+              );
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  private async showMessageSuccess(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Info',
+      message: message,
+      buttons: ['Ok']
+    });
+    return await alert.present();
   }
 }

@@ -13,7 +13,9 @@ import { NoteService } from './../../services/note.service';
   styleUrls: ['./list-notes.page.scss']
 })
 export class ListNotesPage {
+
   static pageName = 'list-notes';
+
   notesDTO: NoteDTO[] = [];
   private loading: any;
   constructor(
@@ -85,16 +87,7 @@ export class ListNotesPage {
     await alert.present();
   }
 
-  registerNote() {
-    this.router.navigate([`/${RegisterNotePage.pageName}`]);
-  }
-
-  updateNote(noteDTO: NoteDTO) {
-    const id = noteDTO.id;
-    this.router.navigate([`/${RegisterNotePage.pageName}/${id}`]);
-  }
-
-  deleteNote(id) {
+  deleteNote(id: string) {
     this.presentAlertConfirm(id);
   }
 
@@ -116,7 +109,7 @@ export class ListNotesPage {
               this.noteService.delete(id).subscribe(
                 data => {
                   this.loading.dismiss();
-                  from(this.showMessageSucesss(data.message)).subscribe(() =>
+                  from(this.showMessageSuccess(data.message)).subscribe(() =>
                     this.inicializarLista()
                   );
                 },
@@ -135,7 +128,7 @@ export class ListNotesPage {
     await alert.present();
   }
 
-  private async showMessageSucesss(message: string) {
+  private async showMessageSuccess(message: string) {
     const alert = await this.alertController.create({
       header: 'Info',
       message: message,

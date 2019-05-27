@@ -29,8 +29,10 @@ const routes: Routes = [
   },
   { path: RegisterTransactionPage.pageName, 
     loadChildren: './pages/register-transaction/register-transaction.module#RegisterTransactionPageModule' 
+  },
+  { path: RegisterTransactionPage.pageName + '/:id', 
+    loadChildren: './pages/register-transaction/register-transaction.module#RegisterTransactionPageModule' 
   }
-
 ];
 
 @NgModule({
